@@ -9,7 +9,6 @@ var partials = require('express-partials');
 var routes = require('./routes/index');
 
 var app = express();
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -22,6 +21,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(function(req, res, next){
+    app.locals.aciertos = (app.locals.aciertos || 0);
+    app.locals.fallos = (app.locals.fallos || 0);
+    next();
+})
 
 app.use('/', routes);
 
