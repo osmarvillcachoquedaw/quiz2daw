@@ -1,3 +1,4 @@
+
 var path = require('path');
 
 // Cargar Modelo ORM
@@ -11,7 +12,6 @@ var sequelize = new Sequelize(null, null, null,
 // Importar la definición de la tabla Quiz en quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 
-exports.Quiz = Quiz; // exportar definición de tabla Quiz
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
@@ -28,3 +28,12 @@ sequelize.sync().then(function() {
 		};
 	});
 });
+
+var comment_path = path.join(__dirname, 'comment');
+var Comment = sequelize.import(comment_path);
+
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
+
+exports.Quiz = Quiz; // exportar definición de tabla Quiz
+exports.Comment = Comment;
