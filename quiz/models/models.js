@@ -15,6 +15,12 @@ var Quiz = sequelize.import(path.join(__dirname,'quiz'));
 var comment_path = path.join(__dirname,'comment');
 var Comment = sequelize.import(comment_path);
 
+//Importar la definicion de la tabla User en user.js
+var User = sequelize.import(path.join(__dirname,'User'));
+
+exports.User = User; // exporta la definicion de la tabla User
+
+
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
@@ -31,9 +37,21 @@ sequelize.sync().then(function(){
 			Quiz.create({pregunta: 'Capital de Portugal',
 						respuesta: 'Lisboa'
 			})
-		.then(function(){console.log('Base de datos inicializada')});
+		.then(function(){console.log('Base de datos Quiz inicializada')});
+		};
+	});
+	
+	User.count().then(function(count){
+		if(count===0){//la tabla se inicializa solo si está vacia
+			User.create({username: "admin",
+						password: "1234"
+			});
+			User.create({username: "pepe",
+						password: "5678"
+			})
+		.then(function(){console.log('Base de datos User inicializada')});
 		};
 	});
 });
-	
+
 	
