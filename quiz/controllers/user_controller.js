@@ -1,11 +1,12 @@
 var models = require('../models/models.js');
 
-exports.autenticar = function(login, password, callback){
-	if(user){
-		
-		if(req.query.password === req.quiz.password){
-			callback(null,users[login]);
+exports.autenticar = function(login, pass, callback){
+	models.User.find({
+			where: {username: login, password: pass}
+		}).then(function(user){
+			if(user){
+				callback(null, user);
+			}else{callback(new Error('Error al introducir los datos'));}
 		}
-		else{callback(new Error('Password erróneo.')); }
-	}else{callback(new Error('No existe usuario.')); }	
+	).catch(function(error){ next(error)});
 };
