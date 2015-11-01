@@ -9,6 +9,16 @@ exports.loginRequired = function(req,res, next){
 };
 
 
+exports.adminRequired = function(req,res, next){
+	if(req.session.user && req.session.user.username == "admin"){
+		next();
+		
+	}else{ 
+		req.session.errors = [{"message": 'No esta autenticado como admin'}];
+		res.redirect("/login");
+	}
+};
+
 
 // Get/login -- Formulario de login
 exports.new = function(req,res){

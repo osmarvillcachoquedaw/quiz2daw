@@ -6,6 +6,9 @@ var autorController = require('../controllers/autor_controller')
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 
+/* Listado - Alex Baquerizo Jimenez */
+var userController = require('../controllers/user_controller')
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Quiz', errors: [] });
@@ -21,6 +24,8 @@ router.post('/login', sessionController.create);
 router.get('/logout', sessionController.destroy);
 
 router.get('/autores', autorController.list); // Ruta del listado de autores
+
+router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
 
 router.get('/quizes', quizController.index);
 router.get('/quizes/:quizId(\\d+)', quizController.show);
