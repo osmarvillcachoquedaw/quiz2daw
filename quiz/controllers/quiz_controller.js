@@ -26,7 +26,10 @@ exports.show = function(req, res) {
     res.render('quizes/show', {quiz: req.quiz});
 };
 
-// GET /quizes/answer
+
+
+
+// GET /quizes/:id/answer
 exports.answer = function(req, res) {
 
 	var resultado = 'Incorrecto';
