@@ -18,6 +18,7 @@ router.get('/', function(req, res, next) {
 // Autoload de comandos con :quizId
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
+router.param('userId', userController.load);//autoload :userId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -25,8 +26,6 @@ router.post('/login', sessionController.create);
 router.get('/logout', sessionController.destroy);
 
 router.get('/autores', autorController.list); // Ruta del listado de autores
-
-router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
 
 router.get('/quizes', quizController.index);
 
@@ -42,5 +41,11 @@ router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
 
 router.get('/quizes/:quizId(\\d+)/comments/:comentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
+
+router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
+router.get('/users/:userId(\\d+)/edit',            sessionController.adminRequired, userController.edit);
+router.put('/users/:userId(\\d+)',                  sessionController.adminRequired, userController.update);
+router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
+
 
 module.exports = router;
