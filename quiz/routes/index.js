@@ -8,6 +8,7 @@ var sessionController = require('../controllers/session_controller');
 
 /* Listado - Alex Baquerizo Jimenez */
 var userController = require('../controllers/user_controller')
+var profesorController = require('../controllers/profesor_controller')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -26,6 +27,11 @@ router.post('/login', sessionController.create);
 router.get('/logout', sessionController.destroy);
 
 router.get('/autores', autorController.list); // Ruta del listado de autores
+
+router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
+router.get('/profesores', sessionController.adminRequired, profesorController.index); /* Listado - Alex Baquerizo Jimenez */
+router.post('/profesores/create', sessionController.adminRequired, profesorController.create);
+router.get('/profesores/new', sessionController.adminRequired, profesorController.new);
 
 router.get('/quizes', quizController.index);
 
