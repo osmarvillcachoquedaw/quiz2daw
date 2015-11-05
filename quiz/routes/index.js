@@ -30,8 +30,10 @@ router.get('/autores', autorController.list); // Ruta del listado de autores
 
 router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
 router.get('/profesores', sessionController.adminRequired, profesorController.index); /* Listado - Alex Baquerizo Jimenez */
-router.post('/profesores/create', sessionController.adminRequired, profesorController.create);
 router.get('/profesores/new', sessionController.adminRequired, profesorController.new);
+router.post('/profesores/create', sessionController.adminRequired, profesorController.create);
+
+
 
 router.get('/quizes', quizController.index);
 
