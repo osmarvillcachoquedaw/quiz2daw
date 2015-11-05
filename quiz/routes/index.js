@@ -16,10 +16,11 @@ router.get('/', function(req, res, next) {
 });
 
 
-// Autoload de comandos con :quizId
+// Autoload de comandos
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
+router.param('profesorId', profesorController.load);//autoload :profesorId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -32,6 +33,9 @@ router.get('/users', sessionController.adminRequired, userController.index); /* 
 router.get('/profesores', sessionController.adminRequired, profesorController.index); /* Listado - Alex Baquerizo Jimenez */
 router.get('/profesores/new', sessionController.adminRequired, profesorController.new);
 router.post('/profesores/create', sessionController.adminRequired, profesorController.create);
+router.put('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.update);
+router.delete('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.destroy);
+router.get('/profesores/:profesorId(\\d+)/edit', sessionController.adminRequired, profesorController.edit);
 
 
 

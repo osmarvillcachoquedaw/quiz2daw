@@ -1,5 +1,23 @@
 var models = require('../models/models.js');
 
+// Autoload - factoriza el código si ruta incluye :profesorId
+exports.load = function(req, res, next, profesorId) {
+	models.Profesor.find({
+		where : {
+			id : Number(profesorId)
+		},
+	}).then(function(profesor) {
+		if (profesor) {
+			req.profesor = profesor;
+			next();
+		} else {
+			next(new Error('No existe profesorId=' + profesorId));
+		}
+	}).catch(function(error) {
+		next(error);
+	});
+};
+
 //Muestra los profesores
 exports.index = function(req, res) {
 	models.Profesor.findAll().then(
@@ -8,8 +26,6 @@ exports.index = function(req, res) {
 		}
 	).catch(function(error){next(error);})
 };
-
-///////////////EDITANDO LA FUNCIONALIDAD AÑADIR USUARIO
 
 // GET /profesores/new
 exports.new = function(req, res) {
@@ -36,4 +52,43 @@ exports.create = function(req, res) {
 			}
 		}
 	);
+};
+
+
+// GET /profesores/:id/edit - Editar Profesor
+exports.edit = function(req, res) {
+    var profesor = req.profesor; //autoload de instancia de profesor
+    res.render('profesores/edit', {profesor: profesor});
+};
+
+exports.update = function(req, res) {
+    req.profesor.apellidos = req.body.profesor.apellidos;
+    req.profesor.nombre = req.body.profesor.nombre;
+    req.profesor.email = req.body.profesor.email;
+	req.profesor.dni = req.body.profesor.dni;
+	req.profesor.movil = req.body.profesor.movil;
+	req.profesor.departamento = req.body.profesor.departamento;
+	req.profesor.idUsuario = req.body.profesor.idUsuario;
+    req.profesor
+            .validate()
+            .then(
+            function(err){
+                if(err){
+                    res.render('profesores/edit',{profesor: req.profesor});
+                }else{
+                    req.profesor
+                            .save({fields:["apellidos", "nombre", "email", "dni", "movil", "departamento", "idUsuario"]})
+                            .then(function(){res.redirect('/profesores');});
+                }
+            }
+        );
+};
+
+
+
+// Eliminar Profesor
+exports.destroy = function(req, res) {
+    req.profesor.destroy().then( function(){
+        res.redirect('/profesores');
+    }).catch(function(error){next(error)});
 };
