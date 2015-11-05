@@ -1,0 +1,17 @@
+<table>
+<% var i; for (i=0;i<alumnos.length;i++){ %>
+<tr>
+	<%if(session.alumno){%>
+		<td><%= alumnos[i].id %>-<%= alumnos[i].username %></td>
+		<td><a href="/alumnos/<%= alumnos[i].id %>/edit"><button>editar</button></a></td>
+		<td>
+			<form method="post" action="/alumnos/<%= alumnos[i].id %>?_method=delete">
+				<button type="submit" onclick="return confirm('Borrar: <%= alumnos[i].username %>');">
+					borrar
+				</button>
+			</form>
+		</td>
+	<%}%>
+</tr>
+<% } %>
+</table>

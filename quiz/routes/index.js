@@ -50,5 +50,6 @@ router.put('/users/:userId(\\d+)',                  sessionController.adminRequi
 router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
 
 router.delete('/alumnos/:alumnoId(\\d+)', sessionController.adminRequired, alumnosController.destroy);
+router.get('/alumnos', sessionController.adminRequired, alumnoController.index); 
 
 module.exports = router;
