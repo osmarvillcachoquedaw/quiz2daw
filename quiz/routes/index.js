@@ -7,7 +7,8 @@ var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 
 /* Listado - Alex Baquerizo Jimenez */
-var userController = require('../controllers/user_controller')
+var userController = require('../controllers/user_controller');
+var alumnosController = require('../controllers/alumnos_controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -19,6 +20,7 @@ router.get('/', function(req, res, next) {
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
+router.param('alumnosId', alumnosController.load);//autoload :userId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -47,5 +49,6 @@ router.get('/users/:userId(\\d+)/edit',            sessionController.adminRequir
 router.put('/users/:userId(\\d+)',                  sessionController.adminRequired, userController.update);
 router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
 
+router.delete('/alumnos/:alumnosId(\\d+)', sessionController.adminRequired, alumnosController.destroy);
 
 module.exports = router;
