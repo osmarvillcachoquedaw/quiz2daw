@@ -7,8 +7,8 @@ var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 
 /* Listado - Alex Baquerizo Jimenez */
-var userController = require('../controllers/user_controller')
-
+var userController = require('../controllers/user_controller');
+var alumnoController = require('../controllers/alumno_controller');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Quiz', errors: [] });
@@ -46,6 +46,6 @@ router.get('/users', sessionController.adminRequired, userController.index); /* 
 router.get('/users/:userId(\\d+)/edit',            sessionController.adminRequired, userController.edit);
 router.put('/users/:userId(\\d+)',                  sessionController.adminRequired, userController.update);
 router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
-
+router.get('/alumnos', sessionController.adminRequired, alumnoController.index); 
 
 module.exports = router;
