@@ -4,8 +4,9 @@ var models = require('../models/models.js');
 exports.load = function(req, res, next, profesorId) {
 	models.Profesor.find({
 		where : {
-			id : Number(profesorId)
+			id : Number(profesorId),			
 		},
+		include: [{ model: models.User }]
 	}).then(function(profesor) {
 		if (profesor) {
 			req.profesor = profesor;
@@ -30,7 +31,7 @@ exports.index = function(req, res) {
 // GET /profesores/new
 exports.new = function(req, res) {
 	var profesor = models.Profesor.build( //crea objeto quiz
-	{apellidos: "apellidos", nombre: "nombre", email: "email", dni: "dni", movil: "movil", departamento: "departamento", idUsuario: "12345"}
+	{apellidos: "apellidos", nombre: "nombre", email: "email", dni: "dni", movil: "movil", departamento: "departamento"}
 	);
     res.render('profesores/new', {profesor: profesor});
 };
@@ -46,7 +47,7 @@ exports.create = function(req, res) {
 			if(err) {
 			res.render('profesor/new', {profesor: profesor, errors: err.errors});
 			} else {
-				profesor.save({fields: ["apellidos", "nombre", "email", "dni", "movil", "departamento", "idUsuario"]}).then(function(){
+				profesor.save({fields: ["apellidos", "nombre", "email", "dni", "movil", "departamento"]}).then(function(){
 					res.redirect('/profesores');
 				})	//Redireccion HTTP (URL relativo) lista de profesores
 			}
@@ -68,7 +69,6 @@ exports.update = function(req, res) {
 	req.profesor.dni = req.body.profesor.dni;
 	req.profesor.movil = req.body.profesor.movil;
 	req.profesor.departamento = req.body.profesor.departamento;
-	req.profesor.idUsuario = req.body.profesor.idUsuario;
     req.profesor
             .validate()
             .then(
@@ -77,7 +77,7 @@ exports.update = function(req, res) {
                     res.render('profesores/edit',{profesor: req.profesor});
                 }else{
                     req.profesor
-                            .save({fields:["apellidos", "nombre", "email", "dni", "movil", "departamento", "idUsuario"]})
+                            .save({fields:["apellidos", "nombre", "email", "dni", "movil", "departamento"]})
                             .then(function(){res.redirect('/profesores');});
                 }
             }

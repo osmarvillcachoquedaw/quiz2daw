@@ -50,8 +50,7 @@ sequelize.sync().then(function() {
 					  email: 'albertosierra@gmail.com',
 					  dni: '12345678E',
 					  movil: '699699699',
-					  departamento: 'Informatica',
-					  idUsuario: ''
+					  departamento: 'Informatica'
 		})
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};
@@ -66,8 +65,9 @@ Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
 //Relacion Profesor
+
 Profesor.belongsTo(User);
-User.hasMany(Profesor);
+User.hasMany(Profesor, {foreignKey: 'idUsuario'});
 
 
 exports.Quiz = Quiz; // exportar definición de tabla Quiz

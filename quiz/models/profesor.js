@@ -23,8 +23,5 @@ module.exports = function(sequelize, DataTypes) {
 		departamento: {
 			type: DataTypes.STRING,
 		},
-		idUsuario: {
-			type: DataTypes.INTEGER,
-		},
 	});
 }
