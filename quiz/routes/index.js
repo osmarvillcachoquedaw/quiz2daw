@@ -50,5 +50,7 @@ router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userContr
 
 router.delete('/alumnos/:alumnoId(\\d+)', sessionController.adminRequired, alumnoController.destroy);
 router.get('/alumnos', sessionController.adminRequired, alumnoController.index); 
+router.get('/alumnos/new', sessionController.adminRequired, alumnoController.new);
+router.post('/alumnos/create', sessionController.adminRequired, alumnoController.create);
 
 module.exports = router;

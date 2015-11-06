@@ -32,4 +32,29 @@ exports.index = function(req, res) {
 	).catch(function(error){next(error);})
 };
 
-/*AnhadirAlumno*/
+// GET /alumnos/new
+exports.new = function(req, res) {
+	var alumno = models.Alumno.build( //crea objeto alumno
+	{dni: "dni", nombre: "nombre", apellido1: "apellido1", apellido2: "apellido2", email: "email"}
+	);
+    res.render('alumnos/new', {alumno: alumno});
+};
+
+// POST /alumnos/create
+exports.create = function(req, res) {
+	var alumno = models.Alumno.build( req.body.alumno );
+	
+	//guarda en DB los campos pregunta y respuesta de alumno
+	alumno.validate()
+	.then(
+		function(err){
+			if(err) {
+			res.render('alumnos/new', {alumno: alumno, errors: err.errors});
+			} else {
+				alumno.save({fields: ["nombre", "apellidos1", "apellidos2", "e-mail"]}).then(function(){
+					res.redirect('/alumnos');
+				})	//Redireccion HTTP (URL relativo) lista de preguntas
+			}
+		}
+	);
+};
