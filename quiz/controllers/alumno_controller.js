@@ -35,7 +35,7 @@ exports.index = function(req, res) {
 // GET /alumnos/new
 exports.new = function(req, res) {
 	var alumno = models.Alumno.build( //crea objeto alumno
-	{dni: "dni", nombre: "nombre", apellido1: "apellido1", apellido2: "apellido2", email: "email"}
+	{dni: "DNI", nombre: "Nombre", apellido1: "Apellido1", apellido2: "Apellido2", email: "E-mail"}
 	);
     res.render('alumnos/new', {alumno: alumno});
 };
@@ -51,7 +51,7 @@ exports.create = function(req, res) {
 			if(err) {
 			res.render('alumnos/new', {alumno: alumno, errors: err.errors});
 			} else {
-				alumno.save({fields: ["nombre", "apellidos1", "apellidos2", "e-mail"]}).then(function(){
+				alumno.save({fields: ["dni","nombre", "apellido1", "apellido2", "email"]}).then(function(){
 					res.redirect('/alumnos');
 				})	//Redireccion HTTP (URL relativo) lista de preguntas
 			}
