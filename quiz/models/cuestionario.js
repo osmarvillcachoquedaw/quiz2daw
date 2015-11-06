@@ -4,8 +4,8 @@ module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('Cuestionario',
 	{
 		creador: {
-			type: DataTypes.STRING,
-			validate: {notEmpty: {msg: "->Falta Nombre de Creador"}}
+                    type: DataTypes.INTEGER,
+                    validate: {notEmpty: {msg: "->Falta Creador"}}
 		},
 		alumno: {
 			type: DataTypes.INTEGER,
@@ -15,9 +15,9 @@ module.exports = function(sequelize, DataTypes) {
 			type: DataTypes.STRING,
 			validate: {notEmpty: { msg: "->Falta Obervaciones" }}
 		},
-		Fecha: {
+                fechaFin: {
 			type: DataTypes.DATE,
 			validate: {notEmpty: { msg: "->Falta  Fecha"}}
 		}
 	});
-}
+};

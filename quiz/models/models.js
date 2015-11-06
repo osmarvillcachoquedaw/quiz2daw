@@ -61,10 +61,10 @@ sequelize.sync().then(function() {
 	});
 	Cuestionario.count().then(function(count){
 		if(count === 0){
-			Cuestionario.create({ creador: 'nirtika' ,
-									alumno: '2',
+			Cuestionario.create({ creador: 2 ,
+									alumno: 2,
 									observaciones: 'vacio' ,
-									fechaFin: '2015-10-35',
+									fechaFin: '2015-10-2',
 				
 			})
 			.then(function(){console.log('Tabla Cuestionario inicializada')})
