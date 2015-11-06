@@ -1,11 +1,13 @@
+var models = require('../models/models.js');
+
 exports.load = function(req, res, next, alumnoId) {
-	models.User.find({
+	models.Alumno.find({
 		where : {
 			id : Number(alumnoId)
 		},
-	}).then(function(alumnos) {
-		if (alumnos) {
-			req.alumnos = alumnos;
+	}).then(function(alumno) {
+		if (alumno) {
+			req.alumno = alumno;
 			next();
 		} else {
 			next(new Error('No existe alumnoId=' + alumnoId));
@@ -24,8 +26,10 @@ exports.destroy = function(req, res) {
 //Muestra los alumnos
 exports.index = function(req, res) {
 	models.Alumno.findAll().then(
-		function(alumno){
-			res.render('alumnos/index.ejs', {alumno: alumno});
+		function(alumnos){
+			res.render('alumnos/index.ejs', {alumnos: alumnos});
 		}
 	).catch(function(error){next(error);})
 };
+
+/*AnhadirAlumno*/
