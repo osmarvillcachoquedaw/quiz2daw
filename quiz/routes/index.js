@@ -19,6 +19,7 @@ router.get('/', function(req, res, next) {
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
+router.param('alumnoId', userController.load);//autoload :alumnoId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -47,5 +48,9 @@ router.get('/users/:userId(\\d+)/edit',            sessionController.adminRequir
 router.put('/users/:userId(\\d+)',                  sessionController.adminRequired, userController.update);
 router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
 
+//alumno
+
+router.get('/alumnos/new', sessionController.adminRequired, alumnoController.new);
+router.post('/alumnos/create', sessionController.adminRequired, alumnoController.create);
 
 module.exports = router;
