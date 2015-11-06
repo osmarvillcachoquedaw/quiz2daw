@@ -14,6 +14,8 @@ var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 // Importar la definición de la tabla User en user.js
 var User = sequelize.import(path.join(__dirname, 'user'));
 
+var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
@@ -39,6 +41,20 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla User inicializada')});
 		};
 	});
+	
+	Cuestionario.count().then(function(count){
+		if(count === 0){
+			Cuestionario.create({ creador: 2 ,
+									alumno: 2,
+									observaciones: 'vacio' ,
+									fechaFin: '2015-10-2',
+				
+			})
+			.then(function(){console.log('Tabla Cuestionario inicializada')})
+		}
+		
+	})
+	
 });
 
 var comment_path = path.join(__dirname, 'comment');
