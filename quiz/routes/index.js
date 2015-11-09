@@ -7,7 +7,7 @@ var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 var materiaController = require('../controllers/materia_controller');
 /* Listado - Alex Baquerizo Jimenez */
-var userController = require('../controllers/user_controller')
+var userController = require('../controllers/user_controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -49,8 +49,11 @@ router.put('/users/:userId(\\d+)',                  sessionController.adminRequi
 router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
 
 //gestion materia
-router.get('/materias/new', sessionController.adminRequired, materiaController.new);
-router.post('/materias/create', sessionController.ladminRequired, materiaController.create);
-router.delete('/materias/:materiaId(\\d+)', sessionController.adminRequired, materiaController.destroy);
+
+
+router.get('/materias', materiaController.index);
+router.get('/materias/:materiaId(\\d+)', materiaController.show);
+
+
 
 module.exports = router;

@@ -2,12 +2,8 @@
 /*tabla de materias*/
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('materias',
+	return sequelize.define('Materia',
 	{
-		id: {
-			type: DataTypes.STRING,
-			validate: {notEmpty: {msg: "->id de la materia"}}
-		},
 		materia: {
 			type: DataTypes.STRING,
 			validate: {notEmpty: {msg: "->Falta la materia"}}
@@ -18,7 +14,7 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		curso: {
 			type: DataTypes.STRING,
-			validate: {notEmpty: {msg: "->Fatal el curso"}}
+			validate: {notEmpty: {msg: "->Falta el curso"}}
 		}
 	});
 }

@@ -1,6 +1,6 @@
 var models = require('../models/models.js');
 
-// Autoload - factoriza el código si ruta incluye :userId
+// Autoload - factoriza el código si ruta incluye :materiaId
 exports.load = function(req, res, next, materiaId) {
 	models.Materia.find({
 		where : {
@@ -18,12 +18,17 @@ exports.load = function(req, res, next, materiaId) {
 	});
 };
 
-// GET /quizes/new
-exports.new = function(req, res) {
-	var materia = models.Materia.build( //crea objeto materia
-	{id: "Id", materia: "Materia", ensenanza: "Ensenanza", curso: "Curso"}
-	);
-    res.render('materias/new', {materia: materia});
+// GET /materia/new
+exports.index = function(req, res) {
+	models.Materia.findAll().then(
+                function(materias) {
+    res.render('materias/index.ejs', {materias: materias});
+});
+}
+
+// GET /materias/:materiaId
+exports.show = function(req, res) {
+    res.render('materias/show', {materia: req.materia});
 };
 
 // POST /quizes/create
@@ -39,13 +44,13 @@ exports.create = function(req, res) {
 			} else {
 				materia.save({fields: ["id", "materia", "ensenanza", "curso"]}).then(function(){
 					res.redirect('/materias');
-				})	//Redireccion HTTP (URL relativo) lista de preguntas
+				})	//Redireccion HTTP (URL relativo) lista de materias
 			}
 		}
 	);
 };
 
-//Elimina users
+//Elimina materia
 
 exports.destroy = function(req, res) {
 	req.materia.destroy().then(function() {
