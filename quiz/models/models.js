@@ -45,7 +45,6 @@ sequelize.sync().then(function() {
 	Cuestionario.count().then(function(count){
 		if(count === 0){
 			Cuestionario.create({ creador: 2 ,
-									alumno: 2,
 									observaciones: 'vacio' ,
 									fechaFin: '2015-10-2',
 				
@@ -60,9 +59,19 @@ sequelize.sync().then(function() {
 var comment_path = path.join(__dirname, 'comment');
 var Comment = sequelize.import(comment_path);
 
+var cuestionario_path = path.join(__dirname, 'cuestionario');
+var Cuestionario = sequelize.import(cuestionario_path);
+
+var profesor_path = path.join(__dirname, 'profesor');
+var Profesor = sequelize.import(profesor_path);
+
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
+
+Cuestionario.belongsTo(Profesor);
+Profesor.hasMany(Cuestionario);
 
 exports.Quiz = Quiz; // exportar definición de tabla Quiz
 exports.Comment = Comment;
 exports.User = User;
+exports.Cuestionario = Cuestionario;

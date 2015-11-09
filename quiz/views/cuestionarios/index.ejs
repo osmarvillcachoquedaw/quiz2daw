@@ -1,5 +1,9 @@
-<table>
-<% var i; for (i = 0 ; < cuestionarios.length ; i++){ %>
-    <tr><td><a href="cuestioanrios/<%= cuestionarios[i].id %>"><%= cuestionarios[i].cuestionario %></a></td></tr>
+<table border="1px" width="400" style="margin:0 auto;">
+<caption><h2>Cuestionarios</h2></caption>
+<% var i; for (i = 0 ;i < cuestionarios.length ; i++){ %>
+    <tr><td width="10"><%= cuestionarios[i].creador %></td>
+        <td width="25%"><%= cuestionarios[i].observaciones %></td>    
+        <td width="40%"><%= cuestionarios[i].fechaFin.toDateString() %></a></td>
+    </tr>
 <% } %>
 </table>
