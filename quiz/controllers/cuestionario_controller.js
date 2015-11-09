@@ -6,7 +6,8 @@ var models = require('../models/models.js');//coje el modelo estructura de cuest
 exports.load = function(req, res, next, cuestionarioId) {
 		models.Cuestionario.find({
 			where: {
-				id: Number(cuestionarioId)
+				id: Number(cuestionarioId),
+                                include: [{ model: models.Profesor }]
 			}
 		}).then(function(cuestionario) {
 			if(cuestionario) {
@@ -19,8 +20,18 @@ exports.load = function(req, res, next, cuestionarioId) {
 >>>>>>> listaCuestionario
 //  GET/cuestioanrios VISTA DE LISTA CUESTIONARIOS
 exports.index = function(req, res) {
+<<<<<<< 624fdd89d5e433807bd10466fbcc79f01af98c74
     models.Cuestionario.findAll().then(
             function(cuestionarios) {
                 res.render('cuestionarios/index.ejs', {cuestionarios: cuestionarios});
             });
 };
+=======
+	models.Cuestionario.findAll({
+                    include: [{ model: models.Profesor }]
+		}).then(
+                function(cuestionarios) {
+    res.render('cuestionarios/index.ejs', {cuestionarios: cuestionarios});
+});
+}
+>>>>>>> asociando al modelo de profesor

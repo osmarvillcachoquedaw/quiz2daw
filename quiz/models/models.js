@@ -104,3 +104,4 @@ exports.Profesor = Profesor;
 =======
 >>>>>>> listaCuestionario
 exports.Cuestionario = Cuestionario;
+exports.Profesor = Profesor;
