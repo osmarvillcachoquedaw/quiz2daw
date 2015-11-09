@@ -7,10 +7,7 @@ module.exports = function(sequelize, DataTypes) {
                     type: DataTypes.INTEGER,
                     validate: {notEmpty: {msg: "->Falta Creador"}}
 		},
-		alumno: {
-			type: DataTypes.INTEGER,
-			validate: {notEmpty: {msg: "->Falta Alumno"}}
-		},
+
 		observaciones: {
 			type: DataTypes.STRING,
 			validate: {notEmpty: { msg: "->Falta Obervaciones" }}
