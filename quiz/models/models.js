@@ -8,17 +8,14 @@ var sequelize = new Sequelize(null, null, null,
 			{dialect: "sqlite", storage: "quiz.sqlite"}
 		);
 
-// Importar la definici√≥n de la tabla Quiz en quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
-
-// Importar la definici√≥n de la tabla User en user.js
 var User = sequelize.import(path.join(__dirname, 'user'));
 
-// Importar la definici√≥n de la tabla Profesor en profesor.js
-var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
-
-// Importar la definici√≥n de la tabla Alumno en alumno.js
 var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
+var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
+var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
+var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
+
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
@@ -45,19 +42,7 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla User inicializada')});
 		};
 	});
-	Profesor.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si est· vacÌa
-		Profesor.create({ apellidos: 'Sierra Olmos' ,
-					  nombre: 'Alberto',
-					  email: 'albertosierra@gmail.com',
-					  dni: '12345678E',
-					  movil: '699699699',
-					  departamento: 'Informatica'
-		})
-		.then(function(){console.log('Tabla Profesor inicializada')});
-		};
-	});
-	
+
 	Alumno.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si est√° vac√≠a
 		Alumno.create({ dni: '52748123A',
@@ -71,25 +56,56 @@ sequelize.sync().then(function() {
 						apellido2: 'Guijarro',
 						nombre: 'Davida',
 						email: 'Davida@gmail.com'
-		})
-		.then(function(){console.log('Tabla Alumno inicializada')});
+                 })
+            	.then(function(){console.log('Tabla Alumno inicializada')});
 		};
 	});
+
+	Profesor.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si est· vacÌa
+		Profesor.create({ apellidos: 'Sierra Olmos' ,
+					  nombre: 'Alberto',
+					  email: 'albertosierra@gmail.com',
+					  dni: '12345678E',
+					  movil: '699699699',
+					  departamento: 'Informatica'
+		})
+		.then(function(){console.log('Tabla Profesor inicializada')});
+		};
+	});
+	Cuestionario.count().then(function(count){
+		if(count === 0){
+			Cuestionario.create({ creador: 2 ,
+                                            observaciones: 'vacio' ,
+                                            fechaFin: '2015-10-2',				
+			})
+			.then(function(){console.log('Tabla Cuestionario inicializada')})
+		}
+		
+	})
 });
 
 var comment_path = path.join(__dirname, 'comment');
 var Comment = sequelize.import(comment_path);
 
+var cuestionario_path = path.join(__dirname, 'cuestionario');
+var Cuestionario = sequelize.import(cuestionario_path);
+
+var profesor_path = path.join(__dirname, 'profesor');
+var Profesor = sequelize.import(profesor_path);
+
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
-//Relacion Profesor
-
-Profesor.belongsTo(User);
-User.hasMany(Profesor, {foreignKey: 'idUsuario'});
+Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
+Profesor.hasMany(Cuestionario);
 
 exports.Quiz = Quiz; // exportar definici√≥n de tabla Quiz
 exports.Comment = Comment;
 exports.User = User;
 exports.Profesor = Profesor;
 exports.Alumno = Alumno;
+
+exports.Cuestionario = Cuestionario;
+exports.Cuestionario = Cuestionario;
+exports.Profesor = Profesor;
