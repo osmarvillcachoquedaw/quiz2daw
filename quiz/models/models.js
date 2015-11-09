@@ -14,6 +14,9 @@ var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 // Importar la definición de la tabla User en user.js
 var User = sequelize.import(path.join(__dirname, 'user'));
 
+//importa la definición de la tabla Materia en materia.js
+var Materia = sequelize.import(path.join(__dirname, 'materia'));
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
@@ -39,6 +42,16 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla User inicializada')});
 		};
 	});
+	Materia.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si está vacía
+		Materia.create({ id: '1' , materia: 'servidor', ensenanza: 'informatica', curso: '2DAW'
+					 
+		});
+		Materia.create({ id: '2' , materia: 'cliente', ensenanza: 'informatica', curso: '2DAW'
+		})
+		.then(function(){console.log('Tabla Materia inicializada')});
+		};
+	});
 });
 
 var comment_path = path.join(__dirname, 'comment');
@@ -50,3 +63,4 @@ Quiz.hasMany(Comment);
 exports.Quiz = Quiz; // exportar definición de tabla Quiz
 exports.Comment = Comment;
 exports.User = User;
+exports.Materia = Materia;

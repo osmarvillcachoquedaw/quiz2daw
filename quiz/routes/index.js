@@ -5,7 +5,7 @@ var quizController = require('../controllers/quiz_controller')
 var autorController = require('../controllers/autor_controller')
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
-
+var materiaController = require('../controllers/materia_controller');
 /* Listado - Alex Baquerizo Jimenez */
 var userController = require('../controllers/user_controller')
 
@@ -19,6 +19,7 @@ router.get('/', function(req, res, next) {
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
+router.param('materiaId', materiaController.load);//autoload :materiaId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -47,5 +48,9 @@ router.get('/users/:userId(\\d+)/edit',            sessionController.adminRequir
 router.put('/users/:userId(\\d+)',                  sessionController.adminRequired, userController.update);
 router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
 
+//gestion materia
+router.get('/materias/new', sessionController.adminRequired, materiaController.new);
+router.post('/materias/create', sessionController.ladminRequired, materiaController.create);
+router.delete('/materias/:materiaId(\\d+)', sessionController.adminRequired, materiaController.destroy);
 
 module.exports = router;
