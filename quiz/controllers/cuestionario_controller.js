@@ -8,7 +8,7 @@ exports.load = function(req, res, next, cuestionarioId) {
 			if(cuestionario) {
 				req.cuestionario = cuestionario;
 				next();
-			} else { next(new Error('No existe commentId=' + cuestionarioId))}	
+			} else { next(new Error('No existe cuestinarioId=' + cuestionarioId))}	
 		}
 	).catch(function(error){next(error)});
 }

@@ -1,25 +1,26 @@
 var express = require('express');
 var router = express.Router();
 
-var quizController = require('../controllers/quiz_controller')
-var autorController = require('../controllers/autor_controller')
+var quizController = require('../controllers/quiz_controller');
+var autorController = require('../controllers/autor_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 
 /* Listado - Alex Baquerizo Jimenez */
-var userController = require('../controllers/user_controller')
+var userController = require('../controllers/user_controller');
 var cuestionarioController = require('../controllers/cuestionario_controller');//para listado de cuestionario
-
+var profesorController = require('../controllers/profesor_controller');
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Quiz', errors: [] });
 });
 
 
-// Autoload de comandos con :quizId
+// Autoload de comandos
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
+router.param('profesorId', profesorController.load);//autoload :profesorId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -27,8 +28,9 @@ router.post('/login', sessionController.create);
 router.get('/logout', sessionController.destroy);
 
 router.get('/autores', autorController.list); // Ruta del listado de autores
-router.get('/cuestionarios', cuestionarioController.index);//ruta de listado de cuestionarios
 router.get('/quizes', quizController.index);
+
+router.get('/cuestionarios', cuestionarioController.index); // Ruta del listado de cuestioanrios
 
 router.get('/quizes/:quizId(\\d+)', quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
