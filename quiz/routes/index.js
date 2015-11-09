@@ -5,9 +5,8 @@ var quizController = require('../controllers/quiz_controller')
 var autorController = require('../controllers/autor_controller')
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
-
-/* Listado - Alex Baquerizo Jimenez */
-var userController = require('../controllers/user_controller')
+var userController = require('../controllers/user_controller');
+var grupoController = require('../controllers/grupo_controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -19,6 +18,7 @@ router.get('/', function(req, res, next) {
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
+router.param('grupoId', grupoController.load); //autoload :grupoId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -42,10 +42,14 @@ router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
 
 router.get('/quizes/:quizId(\\d+)/comments/:comentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 
-router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
-router.get('/users/:userId(\\d+)/edit',            sessionController.adminRequired, userController.edit);
-router.put('/users/:userId(\\d+)',                  sessionController.adminRequired, userController.update);
-router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
+router.get('/users', 							sessionController.adminRequired, 	userController.index);
+router.get('/users/:userId(\\d+)/edit',         sessionController.adminRequired, 	userController.edit);
+router.put('/users/:userId(\\d+)',              sessionController.adminRequired, 	userController.update);
+router.delete('/users/:userId(\\d+)', 			sessionController.adminRequired, 	userController.destroy);
 
+router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
+router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
+router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
+router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
 
 module.exports = router;
