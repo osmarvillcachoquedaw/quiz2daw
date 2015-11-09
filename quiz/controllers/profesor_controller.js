@@ -85,6 +85,11 @@ exports.update = function(req, res) {
 };
 
 
+// GET /quizes/:profesorId
+exports.show = function(req, res) {
+    res.render('profesores/show', {profesor: req.profesor});
+};
+
 
 // Eliminar Profesor
 exports.destroy = function(req, res) {
