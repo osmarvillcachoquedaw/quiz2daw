@@ -16,6 +16,7 @@ var User = sequelize.import(path.join(__dirname, 'user'));
 
 // Importar la definición de la tabla Alumno en alumno.js
 var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
+var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
@@ -59,10 +60,27 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla Alumno inicializada')});
 		};
 	});
+	Cuestionario.count().then(function(count){
+		if(count === 0){
+			Cuestionario.create({ creador: 2 ,
+									observaciones: 'vacio' ,
+									fechaFin: '2015-10-2',
+				
+			})
+			.then(function(){console.log('Tabla Cuestionario inicializada')})
+		}
+		
+	})
 });
 
 var comment_path = path.join(__dirname, 'comment');
 var Comment = sequelize.import(comment_path);
+
+var cuestionario_path = path.join(__dirname, 'cuestionario');
+var Cuestionario = sequelize.import(cuestionario_path);
+
+var profesor_path = path.join(__dirname, 'profesor');
+var Profesor = sequelize.import(profesor_path);
 
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
@@ -71,3 +89,7 @@ exports.Quiz = Quiz; // exportar definición de tabla Quiz
 exports.Comment = Comment;
 exports.User = User;
 exports.Alumno = Alumno;
+exports.Cuestionario = Cuestionario;
+
+Cuestionario.belongsTo(Profesor);
+Profesor.hasMany(Cuestionario);
