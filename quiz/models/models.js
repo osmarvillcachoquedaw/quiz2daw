@@ -8,20 +8,23 @@ var sequelize = new Sequelize(null, null, null,
 			{dialect: "sqlite", storage: "quiz.sqlite"}
 		);
 
-// Importar la definiciÛn de la tabla Quiz en quiz.js
+// Importar la definici√≥n de la tabla Quiz en quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 
-// Importar la definiciÛn de la tabla User en user.js
+// Importar la definici√≥n de la tabla User en user.js
 var User = sequelize.import(path.join(__dirname, 'user'));
 
-// Importar la definiciÛn de la tabla Profesor en profesor.js
+// Importar la definici√≥n de la tabla Profesor en profesor.js
 var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
+
+// Importar la definici√≥n de la tabla Alumno en alumno.js
+var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
 	Quiz.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si est· vacÌa
+		if(count === 0) { // la tabla se inicializa solo si est√° vac√≠a
 		Quiz.create({ pregunta: 'Capital de Italia' ,
 					  respuesta: 'Roma'
 		});
@@ -32,7 +35,7 @@ sequelize.sync().then(function() {
 		};
 	});
 	User.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si est· vacÌa
+		if(count === 0) { // la tabla se inicializa solo si est√° vac√≠a
 		User.create({ username: 'admin' ,
 					  password: '1234'
 		});
@@ -42,7 +45,6 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla User inicializada')});
 		};
 	});
-	
 	Profesor.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si est· vacÌa
 		Profesor.create({ apellidos: 'Sierra Olmos' ,
@@ -56,6 +58,23 @@ sequelize.sync().then(function() {
 		};
 	});
 	
+	Alumno.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si est√° vac√≠a
+		Alumno.create({ dni: '52748123A',
+						apellido1: 'P√©rez',
+						apellido2: 'L√≥pez',
+						nombre: 'Juan',
+						email: 'Juan@gmail.com'
+		});
+		Alumno.create({ dni: '65127382S',
+						apellido1: 'Blazquez',
+						apellido2: 'Guijarro',
+						nombre: 'Davida',
+						email: 'Davida@gmail.com'
+		})
+		.then(function(){console.log('Tabla Alumno inicializada')});
+		};
+	});
 });
 
 var comment_path = path.join(__dirname, 'comment');
@@ -69,8 +88,8 @@ Quiz.hasMany(Comment);
 Profesor.belongsTo(User);
 User.hasMany(Profesor, {foreignKey: 'idUsuario'});
 
-
-exports.Quiz = Quiz; // exportar definiciÛn de tabla Quiz
+exports.Quiz = Quiz; // exportar definici√≥n de tabla Quiz
 exports.Comment = Comment;
 exports.User = User;
 exports.Profesor = Profesor;
+exports.Alumno = Alumno;

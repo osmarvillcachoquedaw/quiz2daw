@@ -9,6 +9,7 @@ var sessionController = require('../controllers/session_controller');
 /* Listado - Alex Baquerizo Jimenez */
 var userController = require('../controllers/user_controller')
 var profesorController = require('../controllers/profesor_controller')
+var alumnoController = require('../controllers/alumno_controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -21,6 +22,7 @@ router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
 router.param('profesorId', profesorController.load);//autoload :profesorId
+router.param('alumnoId', alumnoController.load);//autoload :userId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -40,7 +42,6 @@ router.get('/profesores/:profesorId(\\d+)/edit', sessionController.adminRequired
 
 
 router.get('/quizes', quizController.index);
-
 router.get('/quizes/:quizId(\\d+)', quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 router.get('/quizes/new', sessionController.loginRequired, quizController.new);
@@ -59,5 +60,11 @@ router.get('/users/:userId(\\d+)/edit',            sessionController.adminRequir
 router.put('/users/:userId(\\d+)',                  sessionController.adminRequired, userController.update);
 router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
 
+router.delete('/alumnos/:alumnoId(\\d+)', sessionController.adminRequired, alumnoController.destroy);
+router.get('/alumnos', sessionController.adminRequired, alumnoController.index); 
+router.get('/alumnos/new', sessionController.adminRequired, alumnoController.new);
+router.post('/alumnos/create', sessionController.adminRequired, alumnoController.create);
+router.get('/alumnos/:alumnoId(\\d+)/edit',            sessionController.adminRequired, alumnoController.edit);
+router.put('/alumnos/:alumnoId(\\d+)',                  sessionController.adminRequired, alumnoController.update);
 
 module.exports = router;
