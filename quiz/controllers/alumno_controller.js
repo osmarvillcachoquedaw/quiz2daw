@@ -58,3 +58,30 @@ exports.create = function(req, res) {
 		}
 	);
 };
+
+exports.edit = function(req, res) {
+    var alumno = req.alumno; //autoload de instancia de quiz
+    res.render('alumnos/edit', {alumno: alumno});
+};
+
+exports.update = function(req, res) {
+    req.alumno.dni = req.body.alumno.dni;
+    req.alumno.nombre = req.body.alumno.nombre;
+    req.alumno.apellido1 = req.body.alumno.apellido1;
+    req.alumno.apellido2 = req.body.alumno.apellido2;
+    req.alumno.email = req.body.alumno.email;
+    
+    req.alumno
+            .validate()
+            .then(
+            function(err){
+                if(err){
+                    res.render('alumnos/edit',{alumno: req.alumno});
+                }else{
+                    req.alumno
+                            .save({fields:["dni","nombre","apellido1","apellido2","email"]})
+                            .then(function(){res.redirect('/alumnos');});
+                }
+            }
+        );
+};

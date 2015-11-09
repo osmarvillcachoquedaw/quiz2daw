@@ -52,5 +52,7 @@ router.delete('/alumnos/:alumnoId(\\d+)', sessionController.adminRequired, alumn
 router.get('/alumnos', sessionController.adminRequired, alumnoController.index); 
 router.get('/alumnos/new', sessionController.adminRequired, alumnoController.new);
 router.post('/alumnos/create', sessionController.adminRequired, alumnoController.create);
+router.get('/alumnos/:alumnoId(\\d+)/edit',            sessionController.adminRequired, alumnoController.edit);
+router.put('/alumnos/:alumnoId(\\d+)',                  sessionController.adminRequired, alumnoController.update);
 
 module.exports = router;
