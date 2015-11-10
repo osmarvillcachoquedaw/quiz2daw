@@ -49,11 +49,13 @@ router.put('/users/:userId(\\d+)',                  sessionController.adminRequi
 router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
 
 //gestion materia
-
-
 router.get('/materias', materiaController.index);
 router.get('/materias/:materiaId(\\d+)', materiaController.show);
 
+router.get('/materias/new', sessionController.adminRequired, materiaController.new);
+router.post('/materias/create', sessionController.adminRequired, materiaController.create);
 
-
+router.get('/materias/:materiaId(\\d+)/edit', sessionController.adminRequired, materiaController.edit);
+router.put('/materias/:materiaId(\\d+)',                  sessionController.adminRequired, materiaController.update)
+router.delete('/materias/:materiaId(\\d+)', sessionController.adminRequired, materiaController.destroy);
 module.exports = router;

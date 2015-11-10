@@ -18,7 +18,7 @@ exports.load = function(req, res, next, materiaId) {
 	});
 };
 
-// GET /materia/new
+// GET /materia/index
 exports.index = function(req, res) {
 	models.Materia.findAll().then(
                 function(materias) {
@@ -29,6 +29,14 @@ exports.index = function(req, res) {
 // GET /materias/:materiaId
 exports.show = function(req, res) {
     res.render('materias/show', {materia: req.materia});
+};
+
+// GET /materias/new
+exports.new = function(req, res) {
+	var materia = models.Materia.build( //crea objeto materia
+	{materia: "Materia", ensenanza: "Ensenanza", curso: "Curso"}
+	);
+    res.render('materias/new', {materia: materia});
 };
 
 // POST /quizes/create
@@ -48,6 +56,33 @@ exports.create = function(req, res) {
 			}
 		}
 	);
+};
+
+//editar materia
+exports.edit=function(req,res){
+    var materia=req.materia;//autoload de instancia de materia
+    res.render('materias/edit', {materia : materia});
+};
+
+//actualizar materia
+exports.update=function(req,res){
+    req.materia.materia = req.body.materia.materia;
+    req.materia.ensenanza = req.body.materia.ensenanza;
+	req.materia.curso=req.body.materia.curso;
+    
+    req.materia
+            .validate()
+            .then(
+            function(err){
+                if(err){
+                res.render('materias/edit', {materia: req.materia, errors: err.errors});
+            }else  {
+                req.materia
+                        .save({fields:["materia", "ensenanza","curso"]})
+                        .then(function(){res.redirect('/materias');});
+            }
+        }
+    );
 };
 
 //Elimina materia
