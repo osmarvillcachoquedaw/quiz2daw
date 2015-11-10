@@ -8,15 +8,13 @@ var sequelize = new Sequelize(null, null, null,
 			{dialect: "sqlite", storage: "quiz.sqlite"}
 		);
 
-// Importar la definición de la tabla Quiz en quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
-
-// Importar la definición de la tabla User en user.js
 var User = sequelize.import(path.join(__dirname, 'user'));
-
-// Importar la definición de la tabla Alumno en alumno.js
 var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
 var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
+var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
+var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
+
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
@@ -56,16 +54,28 @@ sequelize.sync().then(function() {
 						apellido2: 'Guijarro',
 						nombre: 'Davida',
 						email: 'Davida@gmail.com'
+                 })
+            	.then(function(){console.log('Tabla Alumno inicializada')});
+		};
+	});
+
+	Profesor.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si est� vac�a
+		Profesor.create({ apellidos: 'Sierra Olmos' ,
+					  nombre: 'Alberto',
+					  email: 'albertosierra@gmail.com',
+					  dni: '12345678E',
+					  movil: '699699699',
+					  departamento: 'Informatica'
 		})
-		.then(function(){console.log('Tabla Alumno inicializada')});
+		.then(function(){console.log('Tabla Profesor inicializada')});
 		};
 	});
 	Cuestionario.count().then(function(count){
 		if(count === 0){
 			Cuestionario.create({ creador: 2 ,
-									observaciones: 'vacio' ,
-									fechaFin: '2015-10-2',
-				
+                                            observaciones: 'vacio' ,
+                                            fechaFin: '2015-10-2',				
 			})
 			.then(function(){console.log('Tabla Cuestionario inicializada')})
 		}
@@ -85,11 +95,13 @@ var Profesor = sequelize.import(profesor_path);
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
+Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
+Profesor.hasMany(Cuestionario);
+
 exports.Quiz = Quiz; // exportar definición de tabla Quiz
 exports.Comment = Comment;
 exports.User = User;
 exports.Alumno = Alumno;
 exports.Cuestionario = Cuestionario;
-
-Cuestionario.belongsTo(Profesor);
-Profesor.hasMany(Cuestionario);
+exports.Cuestionario = Cuestionario;
+exports.Profesor = Profesor;

@@ -30,12 +30,14 @@ router.param('cuestionarioId', cuestionarioController.load);//autoload :cuestion
 router.get('/login', sessionController.new);
 router.post('/login', sessionController.create);
 router.get('/logout', sessionController.destroy);
+router.get('/profesores', sessionController.adminRequired, profesorController.index); /* Listado - Alex Baquerizo Jimenez */
 
 //Index de la web
 router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
 router.get('/autores', autorController.list); // Ruta del listado de autores
+router.get('/profesores', sessionController.adminRequired, profesorController.index); /* Listado - Alex Baquerizo Jimenez */
+router.get('/cuestionarios', cuestionarioController.index);//ruta de listado de cuestionarios
 router.get('/quizes', quizController.index);
-router.get('/cuestionarios', cuestionarioController.index); // Ruta del listado de cuestioanrios
 router.get('/alumnos', sessionController.adminRequired, alumnoController.index); 
 
 //quizes
@@ -67,5 +69,12 @@ router.put('/alumnos/:alumnoId(\\d+)',                  sessionController.adminR
 //cuestionarios
 router.get('/cuestionarios/new', sessionController.adminRequired, cuestionarioController.new);
 router.post('/cuestionarios/create', sessionController.adminRequired, cuestionarioController.create);
+
+//profesores
+router.get('/profesores/new', sessionController.adminRequired, profesorController.new);
+router.post('/profesores/create', sessionController.adminRequired, profesorController.create);
+router.put('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.update);
+router.delete('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.destroy);
+router.get('/profesores/:profesorId(\\d+)/edit', sessionController.adminRequired, profesorController.edit);
 
 module.exports = router;
