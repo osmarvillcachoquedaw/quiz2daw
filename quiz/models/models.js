@@ -14,6 +14,9 @@ var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 // Importar la definición de la tabla User en user.js
 var User = sequelize.import(path.join(__dirname, 'user'));
 
+// Importar la definición de la tabla Observacion en observacion.js
+var Observacion = sequelize.import(path.join(__dirname, 'observacion'));
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
@@ -39,6 +42,23 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla User inicializada')});
 		};
 	});
+	Observacion.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si está vacía
+		Observacion.create({ profesor: 'Soro' ,
+							 cuestionario: 1,
+							 observacion:'Estoy muy feliz.'
+		});
+		Observacion.create({ profesor: 'Jose' ,
+							 cuestionario: 2,
+							 observacion:'Me encanta'
+		});
+		Observacion.create({ profesor: 'Alberto' ,
+							 cuestionario: 3,
+							 observacion:'Muy contento.'
+		})
+		.then(function(){console.log('Tabla Observacion inicializada')});
+		};
+	});
 });
 
 var comment_path = path.join(__dirname, 'comment');
@@ -48,5 +68,6 @@ Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
 exports.Quiz = Quiz; // exportar definición de tabla Quiz
-exports.Comment = Comment;
-exports.User = User;
+exports.Comment = Comment;// exportar definición de tabla Comment
+exports.User = User;// exportar definición de tabla User
+exports.Observacion = Observacion;// exportar definición de tabla Observacion
