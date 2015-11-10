@@ -22,6 +22,7 @@ router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
 router.param('profesorId', profesorController.load);//autoload :profesorId
+router.param('cuestionarioId', cuestionarioController.load);//autoload :profesorId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -38,8 +39,11 @@ router.delete('/profesores/:profesorId(\\d+)', sessionController.adminRequired, 
 router.get('/profesores/:profesorId(\\d+)/edit', sessionController.adminRequired, profesorController.edit);
 
 
+// Cuestionarios
 
 router.get('/cuestionarios', cuestionarioController.index);//ruta de listado de cuestionarios
+router.delete('/cuestionarios/:cuestionarioId(\\d+)', sessionController.adminRequired, cuestionarioController.destroy);
+
 
 router.get('/quizes', quizController.index);
 

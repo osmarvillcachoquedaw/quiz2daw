@@ -4,8 +4,7 @@ var models = require('../models/models.js'); //coje el modelo estructura de cues
 exports.load = function(req, res, next, cuestionarioId) {
 		models.Cuestionario.find({
 			where: {
-				id: Number(cuestionarioId),
-                                include: [{ model: models.Profesor }]
+				id: Number(cuestionarioId)
 			}
 		}).then(function(cuestionario) {
 			if(cuestionario) {
@@ -18,12 +17,18 @@ exports.load = function(req, res, next, cuestionarioId) {
 
 //  GET/cuestioanrios VISTA DE LISTA CUESTIONARIOS
 exports.index = function(req, res) {
-
 	models.Cuestionario.findAll({
-                    include: [{ model: models.Profesor }]
+                include: [{ model: models.Profesor }]
 		}).then(
                 function(cuestionarios) {
     res.render('cuestionarios/index.ejs', {cuestionarios: cuestionarios});
 });
+}
+
+//Borrar cuestionarios
+exports.destroy = function(req, res){
+	req.cuestionario.destroy().then(function(){
+        res.redirect('/cuestionarios');
+    }).catch(function(error){next(error)});
 }
 
