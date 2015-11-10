@@ -4,9 +4,9 @@ var models = require('../models/models.js'); //coje el modelo estructura de cues
 exports.load = function(req, res, next, cuestionarioId) {
 		models.Cuestionario.find({
 			where: {
-				id: Number(cuestionarioId),
-                                include: [{ model: models.Profesor }]
-			}
+				id: Number(cuestionarioId)
+			},
+                        include: [{ model: models.Profesor }]
 		}).then(function(cuestionario) {
 			if(cuestionario) {
 				req.cuestionario = cuestionario;
@@ -26,4 +26,28 @@ exports.index = function(req, res) {
     res.render('cuestionarios/index.ejs', {cuestionarios: cuestionarios});
 });
 }
+// GET /cuestionarios/:id/edit
+exports.edit = function(req, res) {
+    var cuestionario = req.cuestionario; //autoload de instancia de cuestionario
+    res.render('cuestionarios/edit', {cuestionario: cuestionario});
+};
+
+exports.update = function(req, res) {
+    req.cuestionario.observaciones = req.body.cuestionario.observaciones;
+    req.cuestionario.fechaFin = req.body.cuestionario.fechaFin;
+    
+    req.cuestionario
+            .validate()
+            .then(
+            function(err){
+                if(err){
+                    res.render('cuestionarios/edit',{cuestionario: req.cuestionario});
+                }else{
+                    req.cuestionario
+                            .save({fields:["observaciones","fechaFin"]})
+                            .then(function(){res.redirect('/cuestionarios');});
+                }
+            }
+        );
+};
 
