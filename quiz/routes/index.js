@@ -11,6 +11,9 @@ var userController = require('../controllers/user_controller')
 var profesorController = require('../controllers/profesor_controller')
 var alumnoController = require('../controllers/alumno_controller');
 
+var userController = require('../controllers/user_controller');
+var grupoController = require('../controllers/grupo_controller');
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Quiz', errors: [] });
@@ -23,12 +26,12 @@ router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
 router.param('profesorId', profesorController.load);//autoload :profesorId
 router.param('alumnoId', alumnoController.load);//autoload :userId
+router.param('grupoId', grupoController.load); //autoload :grupoId
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
 router.post('/login', sessionController.create);
 router.get('/logout', sessionController.destroy);
-
 router.get('/autores', autorController.list); // Ruta del listado de autores
 
 router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
@@ -38,8 +41,6 @@ router.post('/profesores/create', sessionController.adminRequired, profesorContr
 router.put('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.update);
 router.delete('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.destroy);
 router.get('/profesores/:profesorId(\\d+)/edit', sessionController.adminRequired, profesorController.edit);
-
-
 
 router.get('/quizes', quizController.index);
 router.get('/quizes/:quizId(\\d+)', quizController.show);
@@ -52,19 +53,24 @@ router.delete('/quizes/:quizId(\\d+)', sessionController.loginRequired, quizCont
 
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
-
 router.get('/quizes/:quizId(\\d+)/comments/:comentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 
-router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
-router.get('/users/:userId(\\d+)/edit',            sessionController.adminRequired, userController.edit);
-router.put('/users/:userId(\\d+)',                  sessionController.adminRequired, userController.update);
-router.delete('/users/:userId(\\d+)', sessionController.adminRequired, userController.destroy);
+router.get('/users', 							sessionController.adminRequired, 	userController.index);
+router.get('/users/:userId(\\d+)/edit',         sessionController.adminRequired, 	userController.edit);
+router.put('/users/:userId(\\d+)',              sessionController.adminRequired, 	userController.update);
+router.delete('/users/:userId(\\d+)', 			sessionController.adminRequired, 	userController.destroy);
 
-router.delete('/alumnos/:alumnoId(\\d+)', sessionController.adminRequired, alumnoController.destroy);
-router.get('/alumnos', sessionController.adminRequired, alumnoController.index); 
-router.get('/alumnos/new', sessionController.adminRequired, alumnoController.new);
-router.post('/alumnos/create', sessionController.adminRequired, alumnoController.create);
-router.get('/alumnos/:alumnoId(\\d+)/edit',            sessionController.adminRequired, alumnoController.edit);
-router.put('/alumnos/:alumnoId(\\d+)',                  sessionController.adminRequired, alumnoController.update);
+router.delete('/alumnos/:alumnoId(\\d+)', 		sessionController.adminRequired, 	alumnoController.destroy);
+router.get('/alumnos', 							sessionController.adminRequired, 	alumnoController.index); 
+router.get('/alumnos/new', 						sessionController.adminRequired, 	alumnoController.new);
+router.post('/alumnos/create', 					sessionController.adminRequired, 	alumnoController.create);
+router.get('/alumnos/:alumnoId(\\d+)/edit',     sessionController.adminRequired, 	alumnoController.edit);
+router.put('/alumnos/:alumnoId(\\d+)',          sessionController.adminRequired, 	alumnoController.update);
+
+router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
+router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
+router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
+router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
+router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
 
 module.exports = router;

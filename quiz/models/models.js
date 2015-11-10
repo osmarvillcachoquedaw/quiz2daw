@@ -20,6 +20,8 @@ var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 // Importar la definición de la tabla Alumno en alumno.js
 var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
 
+var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
@@ -46,7 +48,7 @@ sequelize.sync().then(function() {
 		};
 	});
 	Profesor.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si est� vac�a
+		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Profesor.create({ apellidos: 'Sierra Olmos' ,
 					  nombre: 'Alberto',
 					  email: 'albertosierra@gmail.com',
@@ -57,7 +59,6 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};
 	});
-	
 	Alumno.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
@@ -75,6 +76,27 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla Alumno inicializada')});
 		};
 	});
+	Grupo.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si está vacía
+		Grupo.create({ tutor: 'jose' ,
+					  anyo: '2015' ,
+					  grupo: "DAW" ,
+					  subgrupo: "DAW" ,
+					  ensenanza: "FP" ,
+					  curso: "2" ,
+					  horarioVisita: "12:00"
+		});
+		Grupo.create({ tutor: 'alberto' ,
+					  anyo: '2015' ,
+					  grupo: "DAW" ,
+					  subgrupo: "DAW" ,
+					  ensenanza: "FP" ,
+					  curso: "1" ,
+					  horarioVisita: "12:00"
+		})
+		.then(function(){console.log('Tabla Grupo inicializada')});
+		};
+	});
 });
 
 var comment_path = path.join(__dirname, 'comment');
@@ -83,13 +105,19 @@ var Comment = sequelize.import(comment_path);
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
-//Relacion Profesor
-
 Profesor.belongsTo(User);
 User.hasMany(Profesor, {foreignKey: 'idUsuario'});
 
-exports.Quiz = Quiz; // exportar definición de tabla Quiz
+Grupo.belongsTo(Profesor);
+Profesor.hasMany(Grupo, {foreignKey: 'nombre'});
+
+exports.Quiz = Quiz; 
 exports.Comment = Comment;
 exports.User = User;
 exports.Profesor = Profesor;
 exports.Alumno = Alumno;
+
+exports.Quiz = Quiz; 
+exports.Comment = Comment;
+exports.User = User;
+exports.Grupo = Grupo;
