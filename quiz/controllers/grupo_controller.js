@@ -5,8 +5,8 @@ exports.load = function(req, res, next, grupoId) {
 	models.Grupo.find({
 		where : {
 			id : Number(grupoId),			
-		},
-		include: [{ model: models.Profesor }]
+		}/* ,
+		include: [{ model: models.Profesor }] */
 	}).then(function(grupo) {
 		if (grupo) {
 			req.grupo = grupo;
@@ -26,6 +26,10 @@ exports.index = function(req, res) {
 			res.render('grupos/index.ejs', {grupos: grupos});
 		}
 	).catch(function(error){next(error);})
+};
+
+exports.show = function(req, res) {
+    res.render('grupos/show', {grupo: req.grupo});
 };
 
 //Edita los grupos

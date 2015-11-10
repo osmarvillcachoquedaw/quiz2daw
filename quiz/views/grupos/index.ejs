@@ -3,10 +3,7 @@
 <tr>
 	<%if(session.user){%>
 		<tr align=left>
-			<td><%= grupos[i].id %> - Grupo: <%= grupos[i].grupo %></td>
-			<td>&nbsp;&nbsp;&nbsp;Subgrupo: <%= grupos[i].subgrupo %></td>
-			<td>&nbsp;&nbsp;&nbsp;Curso: <%= grupos[i].curso %>º</td>
-			<td>&nbsp;&nbsp;&nbsp;Tutor: <%= grupos[i].tutor %></td>
+			<td><a href='/grupos/<%= grupos[i].id %>'><%= grupos[i].id %> - <%= grupos[i].curso %>º <%= grupos[i].grupo %></a></td>
 			<td><a href="/grupos/<%= grupos[i].id %>/edit"><button>Editar</button></a></td>
 			<td>
 				<form method="post" action="/grupos/<%= grupos[i].id %>?_method=delete">

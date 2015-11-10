@@ -28,7 +28,6 @@ router.get('/logout', sessionController.destroy);
 router.get('/autores', autorController.list); // Ruta del listado de autores
 
 router.get('/quizes', quizController.index);
-
 router.get('/quizes/:quizId(\\d+)', quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer', quizController.answer);
 router.get('/quizes/new', sessionController.loginRequired, quizController.new);
@@ -48,6 +47,7 @@ router.put('/users/:userId(\\d+)',              sessionController.adminRequired,
 router.delete('/users/:userId(\\d+)', 			sessionController.adminRequired, 	userController.destroy);
 
 router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
+router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
 router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
 router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);

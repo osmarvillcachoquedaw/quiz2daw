@@ -70,8 +70,8 @@ var Comment = sequelize.import(comment_path);
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
-Grupo.belongsTo(Profesor);
-Profesor.hasMany(Grupo, {foreignKey: 'tutor'});
+/* Grupo.belongsTo(Profesor);
+Profesor.hasMany(Grupo, {foreignKey: 'tutor'}); */
 
 exports.Quiz = Quiz; // exportar definición de tabla Quiz
 exports.Comment = Comment;
