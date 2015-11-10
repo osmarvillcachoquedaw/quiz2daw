@@ -67,6 +67,14 @@ var Comment = sequelize.import(comment_path);
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
+Observacion.belongsTo(Profesor);
+Profesor.hasMany(Observacion, {foreignKey: 'profesor'});
+
+Observacion.belongsTo(Cuestionario);
+Cuestionario.hasMany(Observacion, {foreignKey: 'cuestionario'});
+
+exports.Profesor = Profesor;
+exports.Cuestionario = Cuestionario;
 exports.Quiz = Quiz; // exportar definición de tabla Quiz
 exports.Comment = Comment;// exportar definición de tabla Comment
 exports.User = User;// exportar definición de tabla User
