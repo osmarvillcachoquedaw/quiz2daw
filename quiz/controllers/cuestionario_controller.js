@@ -18,9 +18,8 @@ exports.load = function(req, res, next, cuestionarioId) {
 
 //  GET/cuestioanrios VISTA DE LISTA CUESTIONARIOS
 exports.index = function(req, res) {
-
 	models.Cuestionario.findAll({
-                    include: [{ model: models.Profesor }]
+                include: [{ model: models.Profesor }]
 		}).then(
                 function(cuestionarios) {
     res.render('cuestionarios/index.ejs', {cuestionarios: cuestionarios});
@@ -50,4 +49,11 @@ exports.update = function(req, res) {
             }
         );
 };
+
+//Borrar cuestionarios
+exports.destroy = function(req, res){
+	req.cuestionario.destroy().then(function(){
+        res.redirect('/cuestionarios');
+    }).catch(function(error){next(error)});
+}
 
