@@ -31,4 +31,12 @@
 
 <p><strong>Cuestionarios:</strong></p>
 
-
+<table>
+	<tr>
+		<%for(cuestionario in cuestionarios){%>
+				<td><%= cuestionario.nombre %></td>
+				<td><%= cuestionario.observaciones %></td>
+				<td><%= cuestionario.fechaFin %></td>
+		<%}%>
+	<tr>
+</table>

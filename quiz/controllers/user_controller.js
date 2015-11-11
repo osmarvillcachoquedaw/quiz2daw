@@ -19,15 +19,17 @@ exports.load = function(req, res, next, userId) {
 };
 
 // Autenticar con la base de datos de usuarios
-exports.autenticar = function(login, pass, callback){
+exports.autenticar = function(login, pass, callback) {
 	models.User.find({
-			where: {username: login, password: pass}
-		}).then(function(user){
-			if(user){
+            where: { username: login, password: pass }
+        }).then(function(user) {
+				if(user) {
 				callback(null, user);
-			}else{callback(new Error('Error al introducir los datos'));}
+			} else {
+				callback(new Error('Nombre de usuario o contraseña incorrecta.'));
+			}
 		}
-	).catch(function(error){ next(error)});
+	).catch(function(error) { next(error);});
 };
 
 

@@ -34,7 +34,7 @@ router.param('cuestionarioId', cuestionarioController.load);//autoload :cuestion
 router.get('/login', sessionController.new);
 router.post('/login', sessionController.create);
 router.get('/logout', sessionController.destroy);
-router.get('/profesores', sessionController.adminRequired, profesorController.index); /* Listado - Alex Baquerizo Jimenez */
+
 
 //Index de la web
 router.get('/users', sessionController.adminRequired, userController.index); /* Listado - Alex Baquerizo Jimenez */
@@ -81,5 +81,6 @@ router.post('/profesores/create', sessionController.adminRequired, profesorContr
 router.put('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.update);
 router.delete('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.destroy);
 router.get('/profesores/:profesorId(\\d+)/edit', sessionController.adminRequired, profesorController.edit);
+router.get('/profesores/:profesorId(\\d+)', sessionController.adminRequired, profesorController.show);
 
 module.exports = router;

@@ -34,7 +34,10 @@ exports.new = function(req, res) {
 
 // POST /alumnos/create
 exports.create = function(req, res) {
-	var cuestionario = models.Cuestionario.build( req.body.cuestionario );
+	var cuestionario = models.Cuestionario.build(
+            { texto: req.body.cuestionario.texto,
+                ProfesorId: req.params.profesorId
+            });
 	
 	//guarda en DB los campos pregunta y respuesta de cuestionario
 	cuestionario.validate()
