@@ -7,12 +7,14 @@ var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
 
 /* Listado - Alex Baquerizo Jimenez */
+
 var userController = require('../controllers/user_controller')
 var profesorController = require('../controllers/profesor_controller')
 var alumnoController = require('../controllers/alumno_controller');
-
-var userController = require('../controllers/user_controller');
 var grupoController = require('../controllers/grupo_controller');
+var materiaController = require('../controllers/materia_controller');
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -24,9 +26,13 @@ router.get('/', function(req, res, next) {
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
+
 router.param('profesorId', profesorController.load);//autoload :profesorId
 router.param('alumnoId', alumnoController.load);//autoload :userId
 router.param('grupoId', grupoController.load); //autoload :grupoId
+
+router.param('materiaId', materiaController.load);//autoload :materiaId
+
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -67,10 +73,24 @@ router.post('/alumnos/create', 					sessionController.adminRequired, 	alumnoCont
 router.get('/alumnos/:alumnoId(\\d+)/edit',     sessionController.adminRequired, 	alumnoController.edit);
 router.put('/alumnos/:alumnoId(\\d+)',          sessionController.adminRequired, 	alumnoController.update);
 
+
 router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
 router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
 router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
 router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
+
+
+
+//gestion materia
+router.get('/materias', materiaController.index);
+router.get('/materias/:materiaId(\\d+)', materiaController.show);
+
+router.get('/materias/new', sessionController.adminRequired, materiaController.new);
+router.post('/materias/create', sessionController.adminRequired, materiaController.create);
+
+router.get('/materias/:materiaId(\\d+)/edit', sessionController.adminRequired, materiaController.edit);
+router.put('/materias/:materiaId(\\d+)',                  sessionController.adminRequired, materiaController.update)
+router.delete('/materias/:materiaId(\\d+)', sessionController.adminRequired, materiaController.destroy);
 
 module.exports = router;
