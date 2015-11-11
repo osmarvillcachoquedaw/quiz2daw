@@ -87,7 +87,7 @@ exports.update = function(req, res) {
 
 // GET /quizes/: Cuestionario
 exports.show = function(req, res, next) {
-	models.Cuestionario.find({
+	models.Cuestionario.findAll({
 		where : {
 			creador : Number(req.profesor.id),			
 		}
