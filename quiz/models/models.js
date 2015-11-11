@@ -73,7 +73,7 @@ sequelize.sync().then(function() {
 	});
 	Cuestionario.count().then(function(count){
 		if(count === 0){
-			Cuestionario.create({ creador: 2 ,
+			Cuestionario.create({ creador: 1 ,
                                             observaciones: 'vacio' ,
                                             fechaFin: '2015-10-2',				
 			})
