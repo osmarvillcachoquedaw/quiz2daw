@@ -15,22 +15,8 @@ var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 var User = sequelize.import(path.join(__dirname, 'user'));
 
 
-// Importar la definici√≥n de la tabla Profesor en profesor.js
-var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
-
-// Importar la definici√≥n de la tabla Alumno en alumno.js
-var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
-
-var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
-
-
-// Importar la definiciÛn de la tabla Profesor en profesor.js
-var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
-
-var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
-
-//importa la definici√≥n de la tabla Materia en materia.js
-var Materia = sequelize.import(path.join(__dirname, 'materia'));
+// Importar la definiciÛn de la tabla Observacion en observacion.js
+var Observacion = sequelize.import(path.join(__dirname, 'observacion'));
 
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
@@ -60,81 +46,23 @@ sequelize.sync().then(function() {
 		};
 	});
 
-	Profesor.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si est√° vac√≠a
-		Profesor.create({ apellidos: 'Sierra Olmos' ,
-					  nombre: 'Alberto',
-					  email: 'albertosierra@gmail.com',
-					  dni: '12345678E',
-					  movil: '699699699',
-					  departamento: 'Informatica'
+	Observacion.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si est· vacÌa
+		Observacion.create({ profesor: 'Soro' ,
+							 cuestionario: 1,
+							 observacion:'Estoy muy feliz.'
+		});
+		Observacion.create({ profesor: 'Jose' ,
+							 cuestionario: 2,
+							 observacion:'Me encanta'
+		});
+		Observacion.create({ profesor: 'Alberto' ,
+							 cuestionario: 3,
+							 observacion:'Muy contento.'
 		})
-		.then(function(){console.log('Tabla Profesor inicializada')});
+		.then(function(){console.log('Tabla Observacion inicializada')});
 		};
 	});
-
-	Alumno.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si est√° vac√≠a
-		Alumno.create({ dni: '52748123A',
-						apellido1: 'P√©rez',
-						apellido2: 'L√≥pez',
-						nombre: 'Juan',
-						email: 'Juan@gmail.com'
-		});
-		Alumno.create({ dni: '65127382S',
-						apellido1: 'Blazquez',
-						apellido2: 'Guijarro',
-						nombre: 'Davida',
-						email: 'Davida@gmail.com'
-		})
-		.then(function(){console.log('Tabla Alumno inicializada')});
-		};
-	});
-	Grupo.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si est√° vac√≠a
-		Grupo.create({ tutor: 'jose' ,
-					  anyo: '2015' ,
-					  grupo: "DAW" ,
-					  subgrupo: "DAW" ,
-					  ensenanza: "FP" ,
-					  curso: "2" ,
-					  horarioVisita: "12:00"
-		});
-		Grupo.create({ tutor: 'alberto' ,
-					  anyo: '2015' ,
-					  grupo: "DAW" ,
-					  subgrupo: "DAW" ,
-					  ensenanza: "FP" ,
-					  curso: "1" ,
-					  horarioVisita: "12:00"
-		})
-		.then(function(){console.log('Tabla Grupo inicializada')});
-	};
-	});
-	Materia.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si esta vacia
-		Materia.create({ id: '1' , materia: 'servidor', ensenanza: 'informatica', curso: '2DAW'
-					 
-		});
-		Materia.create({ id: '2' , materia: 'cliente', ensenanza: 'informatica', curso: '2DAW'
-		})
-		.then(function(){console.log('Tabla Materia inicializada')});
-
-		};
-	});
-
-	Cuestionario.count().then(function(count){
-		if(count === 0){
-			Cuestionario.create({ creador: 1 ,
-                                            observaciones: 'vacio' ,
-                                            fechaFin: '2015-10-2',
-				
-			})
-			.then(function(){console.log('Tabla Cuestionario inicializada')})
-		}
-		
-	})
-
 
 });
 
@@ -151,32 +79,17 @@ var Profesor = sequelize.import(profesor_path);
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
-Profesor.belongsTo(User);
-User.hasMany(Profesor, {foreignKey: 'idUsuario'});
 
-Grupo.belongsTo(Profesor);
-Profesor.hasMany(Grupo, {foreignKey: 'nombre'});
+Observacion.belongsTo(Profesor);
+Profesor.hasMany(Observacion, {foreignKey: 'profesor'});
 
-exports.Quiz = Quiz; 
-exports.Comment = Comment;
-exports.User = User;
+Observacion.belongsTo(Cuestionario);
+Cuestionario.hasMany(Observacion, {foreignKey: 'cuestionario'});
+
 exports.Profesor = Profesor;
-exports.Alumno = Alumno;
-
-Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
-Profesor.hasMany(Cuestionario);
-
-
-exports.Quiz = Quiz; 
-exports.Comment = Comment;
-exports.User = User;
-
-exports.Grupo = Grupo;
-
 exports.Cuestionario = Cuestionario;
-exports.Profesor = Profesor;
-
-exports.Grupo = Grupo;
-
-exports.Materia = Materia;
+exports.Quiz = Quiz; // exportar definiciÛn de tabla Quiz
+exports.Comment = Comment;// exportar definiciÛn de tabla Comment
+exports.User = User;// exportar definiciÛn de tabla User
+exports.Observacion = Observacion;// exportar definiciÛn de tabla Observacion
 
