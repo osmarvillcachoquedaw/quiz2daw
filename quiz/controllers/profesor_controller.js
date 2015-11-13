@@ -19,6 +19,18 @@ exports.load = function(req, res, next, profesorId) {
 	});
 };
 
+// Autenticar con la base de datos de usuarios
+exports.roleProfesor = function(userId, callback){
+	models.Profesor.find({
+                    where: {
+                        userId: Number(userId)
+                    }
+            }).then(function(profesor) {
+                    callback(null, profesor);
+		}
+	).catch(function(error){ callback(new Error(error.message))});
+};
+
 //Muestra los profesores
 exports.index = function(req, res) {
 	models.Profesor.findAll().then(

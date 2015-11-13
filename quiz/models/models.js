@@ -42,21 +42,15 @@ sequelize.sync().then(function() {
 		};
 	});
 	Alumno.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si está vacía
+            if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
 						apellido1: 'Pérez',
 						apellido2: 'López',
 						nombre: 'Juan',
-						email: 'Juan@gmail.com'
+						email: 'Juan@gmail.com',
+                                                userId: 2
 		});
-		Alumno.create({ dni: '65127382S',
-						apellido1: 'Blazquez',
-						apellido2: 'Guijarro',
-						nombre: 'Davida',
-						email: 'Davida@gmail.com'
-                 })
-            	.then(function(){console.log('Tabla Alumno inicializada')});
-		};
+            };
 	});
 
 	Profesor.count().then(function(count) {
@@ -66,7 +60,8 @@ sequelize.sync().then(function() {
 					  email: 'albertosierra@gmail.com',
 					  dni: '12345678E',
 					  movil: '699699699',
-					  departamento: 'Informatica'
+					  departamento: 'Informatica',
+                                          userId: 1,
 		})
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};
@@ -97,6 +92,9 @@ Quiz.hasMany(Comment);
 
 Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Cuestionario);
+
+Profesor.belongsTo(User, {foreignKey:'userId'});
+Alumno.belongsTo(User, {foreignKey:'userId'});
 
 exports.Quiz = Quiz; // exportar definición de tabla Quiz
 exports.Comment = Comment;

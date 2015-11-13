@@ -26,7 +26,7 @@ exports.index = function(req, res) {
 }
 // GET /alumnos/new
 exports.new = function(req, res) {
-	var cuestionario = models.Cuestionario.build( //crea objeto alumno
+	var cuestionario = models.Cuestionario.build( //crea objeto cuestionario
 	{creador: "Creador", observaciones: "Observaciones", fechaFin: "Fecha de Finalizacion"}
 	);
     res.render('cuestionarios/new', {cuestionario: cuestionario});
@@ -35,7 +35,7 @@ exports.new = function(req, res) {
 // POST /alumnos/create
 exports.create = function(req, res) {
 	var cuestionario = models.Cuestionario.build( req.body.cuestionario );
-	
+	cuestionario.creador = req.session.profesorId;
 	//guarda en DB los campos pregunta y respuesta de cuestionario
 	cuestionario.validate()
 	.then(
