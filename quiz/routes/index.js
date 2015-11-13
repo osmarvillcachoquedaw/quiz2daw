@@ -11,20 +11,11 @@ var sessionController = require('../controllers/session_controller');
 
 var userController = require('../controllers/user_controller');
 var profesorController = require('../controllers/profesor_controller');
-
-var userController = require('../controllers/user_controller');
-var profesorController = require('../controllers/profesor_controller');
-
 var alumnoController = require('../controllers/alumno_controller');
 var grupoController = require('../controllers/grupo_controller');
 var materiaController = require('../controllers/materia_controller');
-
-
-
-var userController = require('../controllers/user_controller');
-var profesorController = require('../controllers/profesor_controller');
 var cuestionarioController = require('../controllers/cuestionario_controller');//para listado de cuestionario
-
+var observacionController = require('../controllers/observacion_controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -36,6 +27,7 @@ router.get('/', function(req, res, next) {
 router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
+router.param('observacionId', observacionController.load);//autoload :observacionId
 
 router.param('profesorId', profesorController.load);//autoload :profesorId
 
@@ -102,6 +94,12 @@ router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
 router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
 router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
+
+router.get('/observaciones/:observacionId(\\d+)', observacionController.show);
+router.get('/observaciones', sessionController.adminRequired, observacionController.index); 
+router.get('/observaciones/:observacionId(\\d+)/edit',            sessionController.adminRequired, observacionController.edit);
+router.put('/observaciones/:observacionId(\\d+)',                  sessionController.adminRequired, observacionController.update);
+router.delete('/observaciones/:observacionId(\\d+)', sessionController.adminRequired, observacionController.destroy);
 
 
 

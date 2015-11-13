@@ -23,14 +23,12 @@ var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
 
 var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
 
-
-// Importar la definici�n de la tabla Profesor en profesor.js
-var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
-
 var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
 
 //importa la definición de la tabla Materia en materia.js
 var Materia = sequelize.import(path.join(__dirname, 'materia'));
+
+var Observacion = sequelize.import(path.join(__dirname, 'observacion'));
 
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
@@ -133,8 +131,24 @@ sequelize.sync().then(function() {
 			.then(function(){console.log('Tabla Cuestionario inicializada')})
 		}
 		
-	})
-
+	});
+	Observacion.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si está vacía
+		Observacion.create({ profesor: 'Soro' ,
+							 cuestionario: 1,
+							 observacion:'Estoy muy feliz.'
+		});
+		Observacion.create({ profesor: 'Jose' ,
+							 cuestionario: 2,
+							 observacion:'Me encanta'
+		});
+		Observacion.create({ profesor: 'Alberto' ,
+							 cuestionario: 3,
+							 observacion:'Muy contento.'
+		})
+		.then(function(){console.log('Tabla Observacion inicializada')});
+		};
+	});
 
 });
 
@@ -157,26 +171,15 @@ User.hasMany(Profesor, {foreignKey: 'idUsuario'});
 Grupo.belongsTo(Profesor);
 Profesor.hasMany(Grupo, {foreignKey: 'nombre'});
 
+Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
+Profesor.hasMany(Cuestionario);
+
 exports.Quiz = Quiz; 
 exports.Comment = Comment;
 exports.User = User;
 exports.Profesor = Profesor;
 exports.Alumno = Alumno;
-
-Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
-Profesor.hasMany(Cuestionario);
-
-
-exports.Quiz = Quiz; 
-exports.Comment = Comment;
-exports.User = User;
-
 exports.Grupo = Grupo;
-
 exports.Cuestionario = Cuestionario;
-exports.Profesor = Profesor;
-
-exports.Grupo = Grupo;
-
+exports.Observacion = Observacion;
 exports.Materia = Materia;
-
