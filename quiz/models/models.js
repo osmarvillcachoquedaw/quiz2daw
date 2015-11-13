@@ -8,28 +8,28 @@ var sequelize = new Sequelize(null, null, null,
 			{dialect: "sqlite", storage: "quiz.sqlite"}
 		);
 
-// Importar la definiciÃ³n de la tabla Quiz en quiz.js
+// Importar la definición de la tabla Quiz en quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 
-// Importar la definiciÃ³n de la tabla User en user.js
+// Importar la definición de la tabla User en user.js
 var User = sequelize.import(path.join(__dirname, 'user'));
-
-
-// Importar la definiciÃ³n de la tabla Profesor en profesor.js
-var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
-
-// Importar la definiciÃ³n de la tabla Alumno en alumno.js
-var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
-
-var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
 
 
 // Importar la definición de la tabla Profesor en profesor.js
 var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 
+// Importar la definición de la tabla Alumno en alumno.js
+var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
+
+var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
+
+
+// Importar la definici�n de la tabla Profesor en profesor.js
+var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
+
 var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
 
-//importa la definiciÃ³n de la tabla Materia en materia.js
+//importa la definición de la tabla Materia en materia.js
 var Materia = sequelize.import(path.join(__dirname, 'materia'));
 
 
@@ -37,7 +37,7 @@ var Materia = sequelize.import(path.join(__dirname, 'materia'));
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
 	Quiz.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si estÃ¡ vacÃ­a
+		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Quiz.create({ pregunta: 'Capital de Italia' ,
 					  respuesta: 'Roma'
 		});
@@ -49,7 +49,7 @@ sequelize.sync().then(function() {
 	
 	});
 	User.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si estÃ¡ vacÃ­a
+		if(count === 0) { // la tabla se inicializa solo si está vacía
 		User.create({ username: 'admin' ,
 					  password: '1234'
 		});
@@ -61,7 +61,7 @@ sequelize.sync().then(function() {
 	});
 
 	Profesor.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si estÃ¡ vacÃ­a
+		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Profesor.create({ apellidos: 'Sierra Olmos' ,
 					  nombre: 'Alberto',
 					  email: 'albertosierra@gmail.com',
@@ -74,10 +74,10 @@ sequelize.sync().then(function() {
 	});
 
 	Alumno.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si estÃ¡ vacÃ­a
+		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
-						apellido1: 'PÃ©rez',
-						apellido2: 'LÃ³pez',
+						apellido1: 'Pérez',
+						apellido2: 'López',
 						nombre: 'Juan',
 						email: 'Juan@gmail.com'
 		});
@@ -91,7 +91,7 @@ sequelize.sync().then(function() {
 		};
 	});
 	Grupo.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si estÃ¡ vacÃ­a
+		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Grupo.create({ tutor: 'jose' ,
 					  anyo: '2015' ,
 					  grupo: "DAW" ,
@@ -179,3 +179,4 @@ exports.Profesor = Profesor;
 exports.Grupo = Grupo;
 
 exports.Materia = Materia;
+

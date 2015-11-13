@@ -5,7 +5,7 @@ var quizController = require('../controllers/quiz_controller');
 var autorController = require('../controllers/autor_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
-var observacionController = require('../controllers/observacion_controller');
+
 /* Listado - Alex Baquerizo Jimenez */
 
 
@@ -37,7 +37,17 @@ router.param('quizId',quizController.load); //autoload :quizId
 router.param('comentId',commentController.load); //autoload :commentId
 router.param('userId', userController.load);//autoload :userId
 
-router.param('observacionId', observacionController.load);//autoload :observacionId
+router.param('profesorId', profesorController.load);//autoload :profesorId
+
+router.param('alumnoId', alumnoController.load);//autoload :userId
+router.param('grupoId', grupoController.load); //autoload :grupoId
+
+
+router.param('cuestionarioId', cuestionarioController.load);//autoload :cuestionarioId
+
+router.param('materiaId', materiaController.load);//autoload :materiaId
+
+
 
 //Rutas de sesion
 router.get('/login', sessionController.new);
@@ -57,7 +67,9 @@ router.get('/profesores/:profesorId(\\d+)/edit', sessionController.adminRequired
 router.get('/cuestionarios',sessionController.loginRequired, cuestionarioController.index);//ruta de listado de cuestionarios
 router.get('/cuestionarios/:cuestionarioId(\\d+)/edit', sessionController.loginRequired, cuestionarioController.edit);
 router.put('/cuestionarios/:cuestionarioId(\\d+)', sessionController.loginRequired, cuestionarioController.update);
-router.delete('/cuestionarios/:cuestionarioId(\\d+)', sessionController.adminRequired, cuestionarioController.destroy);
+router.delete('/cuestionarios/:cuestionarioId(\\d+)', sessionController.loginRequired, cuestionarioController.destroy);
+router.get('/cuestionarios/new',sessionController.loginRequired, cuestionarioController.new);
+router.post('/cuestionarios/create', sessionController.loginRequired, cuestionarioController.create);
 
 router.get('/quizes', quizController.index);
 router.get('/quizes/:quizId(\\d+)', quizController.show);
@@ -100,12 +112,8 @@ router.get('/materias/:materiaId(\\d+)', materiaController.show);
 router.get('/materias/new', sessionController.adminRequired, materiaController.new);
 router.post('/materias/create', sessionController.adminRequired, materiaController.create);
 
-
-router.get('/observaciones/:observacionId(\\d+)', observacionController.show);
-router.get('/observaciones', sessionController.adminRequired, observacionController.index); 
-router.get('/observaciones/:observacionId(\\d+)/edit',            sessionController.adminRequired, observacionController.edit);
-router.put('/observaciones/:observacionId(\\d+)',                  sessionController.adminRequired, observacionController.update);
-router.delete('/observaciones/:observacionId(\\d+)', sessionController.adminRequired, observacionController.destroy);
-
+router.get('/materias/:materiaId(\\d+)/edit', sessionController.adminRequired, materiaController.edit);
+router.put('/materias/:materiaId(\\d+)',                  sessionController.adminRequired, materiaController.update)
+router.delete('/materias/:materiaId(\\d+)', sessionController.adminRequired, materiaController.destroy);
 
 module.exports = router;
