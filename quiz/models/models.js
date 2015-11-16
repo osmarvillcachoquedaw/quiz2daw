@@ -18,15 +18,27 @@ var User = sequelize.import(path.join(__dirname, 'user'));
 // Importar la definición de la tabla Profesor en profesor.js
 var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 
+
+//Importar la definicion de la tabla CuestionarioAsignado en cuestionarioAsignado.js
+var CuestionarioAsignado = sequelize.import(path.join(__dirname,'cuestionarioAsignado'));
+
+
 // Importar la definición de la tabla Alumno en alumno.js
 var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
 
 var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
 
+
+
+// Importar la definici�n de la tabla Profesor en profesor.js
+var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
+
+
 var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
 
 //importa la definición de la tabla Materia en materia.js
 var Materia = sequelize.import(path.join(__dirname, 'materia'));
+
 
 var Observacion = sequelize.import(path.join(__dirname, 'observacion'));
 
@@ -150,6 +162,18 @@ sequelize.sync().then(function() {
 		};
 	});
 
+
+
+	CuestionarioAsignado.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si está vacía
+		CuestionarioAsignado.create({ completado: '0'
+		})
+		.then(function(){console.log('Tabla CuestionarioAsignado inicializada')});
+		};
+	});
+
+
+
 });
 
 
@@ -171,15 +195,41 @@ User.hasMany(Profesor, {foreignKey: 'idUsuario'});
 Grupo.belongsTo(Profesor);
 Profesor.hasMany(Grupo, {foreignKey: 'nombre'});
 
+
 Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Cuestionario);
+
 
 exports.Quiz = Quiz; 
 exports.Comment = Comment;
 exports.User = User;
 exports.Profesor = Profesor;
 exports.Alumno = Alumno;
+
 exports.Grupo = Grupo;
 exports.Cuestionario = Cuestionario;
 exports.Observacion = Observacion;
 exports.Materia = Materia;
+
+
+Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
+Profesor.hasMany(Cuestionario);
+
+
+exports.Quiz = Quiz; 
+exports.Comment = Comment;
+exports.User = User;
+
+exports.Grupo = Grupo;
+
+exports.Cuestionario = Cuestionario;
+exports.Profesor = Profesor;
+
+exports.Grupo = Grupo;
+
+exports.Materia = Materia;
+
+CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
+
+exports.CuestionarioAsignado = CuestionarioAsignado;
+
