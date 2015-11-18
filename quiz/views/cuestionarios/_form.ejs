@@ -1,6 +1,9 @@
 <p>
+<% if(cuestionario.Profesor) { %>
 <label for="Cre" class="rem">Creador:</label>
-<input type="text" id="dni" name="cuestionario[creador]" value="<%= session.profesor.id %>" />
+<input type="hidden" id="dni" name="cuestionario[creador]" value="<%= session.profesor.id %>" />
+	<%= cuestionario.Profesor.nombre %>
+<% } %>
 </p>
 <p>
 <label for="Obs" class="rem">Observaciones:</label>
