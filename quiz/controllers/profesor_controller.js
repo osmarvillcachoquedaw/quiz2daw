@@ -19,6 +19,18 @@ exports.load = function(req, res, next, profesorId) {
 	});
 };
 
+// Autenticar con la base de datos de usuarios
+exports.roleProfesor = function(userId, callback){
+	models.Profesor.find({
+                    where: {
+                        userId: Number(userId)
+                    }
+            }).then(function(profesor) {
+                    callback(null, profesor);
+		}
+	).catch(function(error){ callback(new Error(error.message))});
+};
+
 //Muestra los profesores
 exports.index = function(req, res) {
 	models.Profesor.findAll().then(
@@ -48,7 +60,7 @@ exports.create = function(req, res) {
 			res.render('profesor/new', {profesor: profesor, errors: err.errors});
 			} else {
 				profesor.save({fields: ["apellidos", "nombre", "email", "dni", "movil", "departamento"]}).then(function(){
-					res.redirect('/profesores');
+					res.redirect('/admin/profesores');
 				})	//Redireccion HTTP (URL relativo) lista de profesores
 			}
 		}
@@ -78,7 +90,7 @@ exports.update = function(req, res) {
                 }else{
                     req.profesor
                             .save({fields:["apellidos", "nombre", "email", "dni", "movil", "departamento"]})
-                            .then(function(){res.redirect('/profesores');});
+                            .then(function(){res.redirect('/admin/profesores');});
                 }
             }
         );
@@ -102,6 +114,6 @@ exports.show = function(req, res, next) {
 // Eliminar Profesor
 exports.destroy = function(req, res) {
     req.profesor.destroy().then( function(){
-        res.redirect('/profesores');
+        res.redirect('/admin/profesores');
     }).catch(function(error){next(error)});
 };

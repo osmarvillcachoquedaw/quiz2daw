@@ -77,7 +77,7 @@ exports.update=function(req,res){
             }else  {
                 req.user
                         .save({fields:["username", "password"]})
-                        .then(function(){res.redirect('/users/');});
+                        .then(function(){res.redirect('/admin/users/');});
             }
         }
     );
@@ -122,7 +122,7 @@ exports.updateMiPerfil=function(req,res){
 
 exports.destroy = function(req, res) {
 	req.user.destroy().then(function() {
-		res.redirect('/users');
+		res.redirect('/admin/users');
 	}).catch(function(error) {
 		next(error)
 	});

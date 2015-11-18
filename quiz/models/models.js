@@ -19,11 +19,12 @@ var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 var User = sequelize.import(path.join(__dirname, 'user'));
 
+
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
-Profesor.belongsTo(User, {foreignKey: 'idUsuario'});
-User.hasMany(Profesor);
+Profesor.belongsTo(User, {foreignKey:'userId'});
+Alumno.belongsTo(User, {foreignKey:'userId'});
 
 Grupo.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Grupo);
@@ -63,58 +64,31 @@ sequelize.sync().then(function() {
 	
 	});
 	Alumno.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si está vacía
+            if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
 						apellido1: 'Pérez',
 						apellido2: 'López',
 						nombre: 'Juan',
-						email: 'Juan@gmail.com'
+						email: 'Juan@gmail.com',
+						userId: 2
 		});
-		Alumno.create({ dni: '65127382S',
-						apellido1: 'Blazquez',
-						apellido2: 'Guijarro',
-						nombre: 'Davida',
-						email: 'Davida@gmail.com'
-                 })
-            	.then(function(){console.log('Tabla Alumno inicializada')});
-		};
+            };
 	});
 
 	Profesor.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si est� vac�a
-		Profesor.create({ apellidos: 'Sierra Olmos' ,
-					  nombre: 'Alberto',
-					  email: 'albertosierra@gmail.com',
-					  dni: '12345678E',
-					  movil: '699699699',
-					  departamento: 'Informatica',
-					  userId: 2
+		if(count === 0) { // la tabla se inicializa solo si está vacía
+		Profesor.create({ apellidos: 'Sierra Olmo' ,
+			  nombre: 'Alberto',
+			  email: 'albertosierra@gmail.com',
+			  dni: '12345678E',
+			  movil: '699699699',
+			  departamento: 'Informatica',
+			  userId: 1,
 		})
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};
 	});
 
-	Grupo.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si está vacía
-			Grupo.create({ tutor: 1 ,
-					  anyo: '2015' ,
-					  grupo: "DAW" ,
-					  subgrupo: "DAW" ,
-					  ensenanza: "FP" ,
-					  curso: "2" ,
-					  horarioVisita: "12:00"
-			});
-			Grupo.create({ 
-					  anyo: '2015' ,
-					  grupo: "DAW" ,
-					  subgrupo: "DAW" ,
-					  ensenanza: "FP" ,
-					  curso: "1" ,
-					  horarioVisita: "12:00"
-			})
-		.then(function(){console.log('Tabla Grupo inicializada')});
-		};
-	});
 	Materia.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si esta vacia
 		Materia.create({ materia: 'servidor', ensenanza: 'informatica', curso: '2DAW'
