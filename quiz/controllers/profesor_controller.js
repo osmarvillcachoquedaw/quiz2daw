@@ -85,6 +85,19 @@ exports.update = function(req, res) {
 };
 
 
+// GET /quizes/: Cuestionario
+exports.show = function(req, res, next) {
+	models.Cuestionario.findAll({
+		where : {
+			creador : Number(req.profesor.id),			
+		}
+	}).then(function(cuestionarios) {
+		res.render('profesores/show', {profesor: req.profesor, cuestionarios: cuestionarios});
+	}).catch(function(error) {
+		next(error);
+	});
+};
+
 
 // Eliminar Profesor
 exports.destroy = function(req, res) {

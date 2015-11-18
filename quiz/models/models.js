@@ -8,40 +8,26 @@ var sequelize = new Sequelize(null, null, null,
 			{dialect: "sqlite", storage: "quiz.sqlite"}
 		);
 
-// Importar la definición de la tabla Quiz en quiz.js
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
-
-// Importar la definición de la tabla User en user.js
 var User = sequelize.import(path.join(__dirname, 'user'));
-
 
 // Importar la definición de la tabla Profesor en profesor.js
 var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 
-
 //Importar la definicion de la tabla CuestionarioAsignado en cuestionarioAsignado.js
 var CuestionarioAsignado = sequelize.import(path.join(__dirname,'cuestionarioAsignado'));
-
 
 // Importar la definición de la tabla Alumno en alumno.js
 var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
 
 var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
 
-
-
-// Importar la definici�n de la tabla Profesor en profesor.js
-var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
-
-
 var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
 
 //importa la definición de la tabla Materia en materia.js
 var Materia = sequelize.import(path.join(__dirname, 'materia'));
 
-
 var Observacion = sequelize.import(path.join(__dirname, 'observacion'));
-
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
@@ -70,19 +56,6 @@ sequelize.sync().then(function() {
 		};
 	});
 
-	Profesor.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si está vacía
-		Profesor.create({ apellidos: 'Sierra Olmos' ,
-					  nombre: 'Alberto',
-					  email: 'albertosierra@gmail.com',
-					  dni: '12345678E',
-					  movil: '699699699',
-					  departamento: 'Informatica'
-		})
-		.then(function(){console.log('Tabla Profesor inicializada')});
-		};
-	});
-
 	Alumno.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
@@ -96,10 +69,24 @@ sequelize.sync().then(function() {
 						apellido2: 'Guijarro',
 						nombre: 'Davida',
 						email: 'Davida@gmail.com'
-		})
-		.then(function(){console.log('Tabla Alumno inicializada')});
+                 })
+            	.then(function(){console.log('Tabla Alumno inicializada')});
 		};
 	});
+
+	Profesor.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si est� vac�a
+		Profesor.create({ apellidos: 'Sierra Olmos' ,
+					  nombre: 'Alberto',
+					  email: 'albertosierra@gmail.com',
+					  dni: '12345678E',
+					  movil: '699699699',
+					  departamento: 'Informatica'
+		})
+		.then(function(){console.log('Tabla Profesor inicializada')});
+		};
+	});
+
 	Grupo.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Grupo.create({ tutor: 'jose' ,
@@ -137,8 +124,7 @@ sequelize.sync().then(function() {
 		if(count === 0){
 			Cuestionario.create({ creador: 1 ,
                                             observaciones: 'vacio' ,
-                                            fechaFin: '2015-10-2',
-				
+                                            fechaFin: '2015-10-02',				
 			})
 			.then(function(){console.log('Tabla Cuestionario inicializada')})
 		}
@@ -199,37 +185,15 @@ Profesor.hasMany(Grupo, {foreignKey: 'nombre'});
 Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Cuestionario);
 
-
-exports.Quiz = Quiz; 
-exports.Comment = Comment;
-exports.User = User;
-exports.Profesor = Profesor;
-exports.Alumno = Alumno;
-
-exports.Grupo = Grupo;
-exports.Cuestionario = Cuestionario;
-exports.Observacion = Observacion;
-exports.Materia = Materia;
-
-
-Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
-Profesor.hasMany(Cuestionario);
-
-
-exports.Quiz = Quiz; 
-exports.Comment = Comment;
-exports.User = User;
-
-exports.Grupo = Grupo;
-
-exports.Cuestionario = Cuestionario;
-exports.Profesor = Profesor;
-
-exports.Grupo = Grupo;
-
-exports.Materia = Materia;
-
 CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
 
+exports.Alumno = Alumno;
+exports.Comment = Comment;
+exports.Cuestionario = Cuestionario;
 exports.CuestionarioAsignado = CuestionarioAsignado;
-
+exports.Grupo = Grupo;
+exports.Materia = Materia;
+exports.Observacion = Observacion;
+exports.Profesor = Profesor;
+exports.Quiz = Quiz; 
+exports.User = User;
