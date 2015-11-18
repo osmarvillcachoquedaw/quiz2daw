@@ -8,42 +8,36 @@ var sequelize = new Sequelize(null, null, null,
 			{dialect: "sqlite", storage: "quiz.sqlite"}
 		);
 
+var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
+var Comment = sequelize.import(path.join(__dirname, 'comment'));
+var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
+var CuestionarioAsignado = sequelize.import(path.join(__dirname,'cuestionarioAsignado'));
+var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
+var Materia = sequelize.import(path.join(__dirname, 'materia'));
+var Observacion = sequelize.import(path.join(__dirname, 'observacion'));
+var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 var User = sequelize.import(path.join(__dirname, 'user'));
 
-// Importar la definición de la tabla Profesor en profesor.js
-var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
 
-//Importar la definicion de la tabla CuestionarioAsignado en cuestionarioAsignado.js
-var CuestionarioAsignado = sequelize.import(path.join(__dirname,'cuestionarioAsignado'));
+Profesor.belongsTo(User, {foreignKey: 'idUsuario'});
+User.hasMany(Profesor);
 
-// Importar la definición de la tabla Alumno en alumno.js
-var Alumno = sequelize.import(path.join(__dirname, 'alumno'))
+Grupo.belongsTo(Profesor, {foreignKey: 'creador'});
+Profesor.hasMany(Grupo);
 
-var Grupo = sequelize.import(path.join(__dirname, 'grupo'));
+Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
+Profesor.hasMany(Cuestionario);
 
-var Cuestionario = sequelize.import(path.join(__dirname, 'cuestionario'));
-
-//importa la definición de la tabla Materia en materia.js
-var Materia = sequelize.import(path.join(__dirname, 'materia'));
-
-var Observacion = sequelize.import(path.join(__dirname, 'observacion'));
+CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
+Alumno.hasMany(CuestionarioAsignado);
+Cuestionario.hasMany(CuestionarioAsignado);
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
-	Quiz.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si está vacía
-		Quiz.create({ pregunta: 'Capital de Italia' ,
-					  respuesta: 'Roma'
-		});
-		Quiz.create({ pregunta: 'Capital de Portugal' ,
-					  respuesta: 'Lisboa'
-		})
-		.then(function(){console.log('Tabla Quiz inicializada')});
-		};
-	
-	});
 	User.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
 		User.create({ username: 'admin' ,
@@ -56,6 +50,18 @@ sequelize.sync().then(function() {
 		};
 	});
 
+	Quiz.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si está vacía
+		Quiz.create({ pregunta: 'Capital de Italia' ,
+					  respuesta: 'Roma'
+		});
+		Quiz.create({ pregunta: 'Capital de Portugal' ,
+					  respuesta: 'Lisboa'
+		})
+		.then(function(){console.log('Tabla Quiz inicializada')});
+		};
+	
+	});
 	Alumno.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
@@ -81,7 +87,8 @@ sequelize.sync().then(function() {
 					  email: 'albertosierra@gmail.com',
 					  dni: '12345678E',
 					  movil: '699699699',
-					  departamento: 'Informatica'
+					  departamento: 'Informatica',
+					  userId: 2
 		})
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};
@@ -89,103 +96,36 @@ sequelize.sync().then(function() {
 
 	Grupo.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
-		Grupo.create({ tutor: 'jose' ,
+			Grupo.create({ tutor: 1 ,
 					  anyo: '2015' ,
 					  grupo: "DAW" ,
 					  subgrupo: "DAW" ,
 					  ensenanza: "FP" ,
 					  curso: "2" ,
 					  horarioVisita: "12:00"
-		});
-		Grupo.create({ tutor: 'alberto' ,
+			});
+			Grupo.create({ 
 					  anyo: '2015' ,
 					  grupo: "DAW" ,
 					  subgrupo: "DAW" ,
 					  ensenanza: "FP" ,
 					  curso: "1" ,
 					  horarioVisita: "12:00"
-		})
+			})
 		.then(function(){console.log('Tabla Grupo inicializada')});
-	};
+		};
 	});
 	Materia.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si esta vacia
-		Materia.create({ id: '1' , materia: 'servidor', ensenanza: 'informatica', curso: '2DAW'
+		Materia.create({ materia: 'servidor', ensenanza: 'informatica', curso: '2DAW'
 					 
 		});
-		Materia.create({ id: '2' , materia: 'cliente', ensenanza: 'informatica', curso: '2DAW'
+		Materia.create({ materia: 'cliente', ensenanza: 'informatica', curso: '2DAW'
 		})
 		.then(function(){console.log('Tabla Materia inicializada')});
-
 		};
 	});
-
-	Cuestionario.count().then(function(count){
-		if(count === 0){
-			Cuestionario.create({ creador: 1 ,
-                                            observaciones: 'vacio' ,
-                                            fechaFin: '2015-10-02',				
-			})
-			.then(function(){console.log('Tabla Cuestionario inicializada')})
-		}
-		
-	});
-	Observacion.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si está vacía
-		Observacion.create({ profesor: 'Soro' ,
-							 cuestionario: 1,
-							 observacion:'Estoy muy feliz.'
-		});
-		Observacion.create({ profesor: 'Jose' ,
-							 cuestionario: 2,
-							 observacion:'Me encanta'
-		});
-		Observacion.create({ profesor: 'Alberto' ,
-							 cuestionario: 3,
-							 observacion:'Muy contento.'
-		})
-		.then(function(){console.log('Tabla Observacion inicializada')});
-		};
-	});
-
-
-
-	CuestionarioAsignado.count().then(function(count) {
-		if(count === 0) { // la tabla se inicializa solo si está vacía
-		CuestionarioAsignado.create({ completado: '0'
-		})
-		.then(function(){console.log('Tabla CuestionarioAsignado inicializada')});
-		};
-	});
-
-
-
 });
-
-
-var comment_path = path.join(__dirname, 'comment');
-var Comment = sequelize.import(comment_path);
-
-var cuestionario_path = path.join(__dirname, 'cuestionario');
-var Cuestionario = sequelize.import(cuestionario_path);
-
-var profesor_path = path.join(__dirname, 'profesor');
-var Profesor = sequelize.import(profesor_path);
-
-Comment.belongsTo(Quiz);
-Quiz.hasMany(Comment);
-
-Profesor.belongsTo(User);
-User.hasMany(Profesor, {foreignKey: 'idUsuario'});
-
-Grupo.belongsTo(Profesor);
-Profesor.hasMany(Grupo, {foreignKey: 'nombre'});
-
-
-Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
-Profesor.hasMany(Cuestionario);
-
-CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
 
 exports.Alumno = Alumno;
 exports.Comment = Comment;
