@@ -21,7 +21,7 @@
 			<% if(!session.user){ %>
 				<span class="right"><a href="/login">Login</a></span>
 			<%}else{%>
-				<span class="right"><%=session.user.username%><a href="/logout">Logout</a></span>
+				<span class="right">Rol:<%=session.role%> - <%=session.user.username%><a href="/logout">Logout</a></span>
 			<%}%>
 
     		<h2>Quiz: el juego de las preguntas</h2>
@@ -30,7 +30,6 @@
     	<nav class="main" id="n1" role="navigation">
 			<span><a href="/admin/">Inicio</a></span>
 			<span><a href="/admin/quizes">Preguntas</a></span>
-			<span><a href="/admin/autores">Autores</a></span>
 			<span><a href="/admin/users">Usuarios</a></span>
 			<span><a href="/admin/alumnos">Alumnos</a></span>
 			<span><a href="/admin/profesores">Profesores</a></span>
@@ -55,7 +54,8 @@
     	<footer class="main" id="f1">
         <p><a href="http://es.wikipedia.org/wiki/Quiz">¿Qué es un Quiz?</a></p>
         <p><a href="https://github.com/2DAW-2Mares/quiz2daw">Repositorio en GitHub</a></p>
-    	</footer>
+		<p><a href="/autores">Autores</a></p>
+   	</footer>
 
     </div>
   </body>
