@@ -19,7 +19,6 @@ var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 var User = sequelize.import(path.join(__dirname, 'user'));
 
-
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
@@ -35,6 +34,9 @@ Profesor.hasMany(Cuestionario);
 CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
 Alumno.hasMany(CuestionarioAsignado);
 Cuestionario.hasMany(CuestionarioAsignado);
+
+Alumno.belongsTo(Grupo, {foreignKey:'grupoId'});
+Grupo.hasMany(Alumno);
 
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
