@@ -29,7 +29,7 @@
 
 <select name="alumno[grupo]">
 	<% var i; for (i=0;i<alumno.length;i++){ %>
-		<option value="<%= alumno.grupoId %>"><%= alumno.grupoId %></option>
+		<option value="<%= alumno[i].grupo %>"><%= alumno[i].grupo %></option>
 	<% } %>
 </select>
 </p>
