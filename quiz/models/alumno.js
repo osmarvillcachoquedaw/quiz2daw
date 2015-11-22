@@ -13,9 +13,6 @@ module.exports = function(sequelize, DataTypes) {
 		apellido2: {
 			type: DataTypes.STRING
 		},
-		grupo: {
-			type: DataTypes.STRING
-		},
 		nombre: {
 			type: DataTypes.STRING,
 			validate: {notEmpty: {msg: "->Falta el Nombre"}}

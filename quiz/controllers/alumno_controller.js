@@ -47,7 +47,7 @@ exports.index = function(req, res) {
 // GET /alumnos/new
 exports.new = function(req, res) {
 	var alumno = models.Alumno.build( //crea objeto alumno
-	{dni: "DNI", nombre: "Nombre", apellido1: "Apellido1", apellido2: "Apellido2",grupo: "Grupo", email: "E-mail"}
+	{dni: "DNI", nombre: "Nombre", apellido1: "Apellido1", apellido2: "Apellido2", email: "E-mail"}
 	);
     res.render('alumnos/new', {alumno: alumno});
 };
@@ -63,7 +63,7 @@ exports.create = function(req, res) {
 			if(err) {
 			res.render('alumnos/new', {alumno: alumno, errors: err.errors});
 			} else {
-				alumno.save({fields: ["dni","nombre", "apellido1", "apellido2", "grupo", "email"]}).then(function(){
+				alumno.save({fields: ["dni","nombre", "apellido1", "apellido2", "email"]}).then(function(){
 					res.redirect('/admin/alumnos');
 				})	//Redireccion HTTP (URL relativo) lista de preguntas
 			}
@@ -81,7 +81,6 @@ exports.update = function(req, res) {
     req.alumno.nombre = req.body.alumno.nombre;
     req.alumno.apellido1 = req.body.alumno.apellido1;
     req.alumno.apellido2 = req.body.alumno.apellido2;
-	req.alumno.grupo = req.body.alumno.grupo;
     req.alumno.email = req.body.alumno.email;
     
     req.alumno
@@ -92,7 +91,7 @@ exports.update = function(req, res) {
                     res.render('alumnos/edit',{alumno: req.alumno});
                 }else{
                     req.alumno
-                            .save({fields:["dni","nombre","apellido1","apellido2","grupo","email"]})
+                            .save({fields:["dni","nombre","apellido1","apellido2","email"]})
                             .then(function(){res.redirect('/admin/alumnos');});
                 }
             }
