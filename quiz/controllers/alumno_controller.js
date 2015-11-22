@@ -5,6 +5,7 @@ exports.load = function(req, res, next, alumnoId) {
 		where : {
 			id : Number(alumnoId)
 		},
+		include: [{ model: models.Grupo }] 
 	}).then(function(alumno) {
 		if (alumno) {
 			req.alumno = alumno;
@@ -47,7 +48,7 @@ exports.index = function(req, res) {
 // GET /alumnos/new
 exports.new = function(req, res) {
 	var alumno = models.Alumno.build( //crea objeto alumno
-	{dni: "DNI", nombre: "Nombre", apellido1: "Apellido1", apellido2: "Apellido2", email: "E-mail"}
+	{dni: "DNI", nombre: "Nombre", apellido1: "Apellido1", apellido2: "Apellido2",email: "E-mail",grupo: "Grupos"}//Ejercicio2
 	);
     res.render('alumnos/new', {alumno: alumno});
 };
@@ -63,7 +64,7 @@ exports.create = function(req, res) {
 			if(err) {
 			res.render('alumnos/new', {alumno: alumno, errors: err.errors});
 			} else {
-				alumno.save({fields: ["dni","nombre", "apellido1", "apellido2", "email"]}).then(function(){
+				alumno.save({fields: ["dni","nombre", "apellido1", "apellido2", "email", "grupo"]}).then(function(){
 					res.redirect('/admin/alumnos');
 				})	//Redireccion HTTP (URL relativo) lista de preguntas
 			}
@@ -82,6 +83,7 @@ exports.update = function(req, res) {
     req.alumno.apellido1 = req.body.alumno.apellido1;
     req.alumno.apellido2 = req.body.alumno.apellido2;
     req.alumno.email = req.body.alumno.email;
+	req.alumno.grupo = req.body.alumno.grupo; //Ejercicio2
     
     req.alumno
             .validate()
@@ -91,7 +93,7 @@ exports.update = function(req, res) {
                     res.render('alumnos/edit',{alumno: req.alumno});
                 }else{
                     req.alumno
-                            .save({fields:["dni","nombre","apellido1","apellido2","email"]})
+                            .save({fields:["dni","nombre","apellido1","apellido2","email","grupo"]})
                             .then(function(){res.redirect('/admin/alumnos');});
                 }
             }
