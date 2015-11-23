@@ -50,6 +50,8 @@ router.get('/alumnos/:alumnoId(\\d+)/edit',     sessionController.adminRequired,
 router.put('/alumnos/:alumnoId(\\d+)',          sessionController.adminRequired, 	alumnoController.update);
 router.delete('/alumnos/:alumnoId(\\d+)', 		sessionController.adminRequired, 	alumnoController.destroy);
 
+
+
 //Comments
 router.get('/quizes/:quizId(\\d+)/comments/new', commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
@@ -71,6 +73,8 @@ router.post('/grupos/create', 					sessionController.adminRequired, 	grupoContro
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
 router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
 router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
+
+
 
 //Materias
 router.get('/materias', materiaController.index);

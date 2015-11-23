@@ -37,7 +37,9 @@ exports.destroy = function(req, res) {
 }; 
 //Muestra los alumnos
 exports.index = function(req, res) {
-	models.Alumno.findAll().then(
+	models.Alumno.findAll()(
+				include: [{ model: models.Grupo }]
+		}).then(
 		function(alumnos){
 			res.render('alumnos/index.ejs', {alumnos: alumnos});
 		}
@@ -98,3 +100,14 @@ exports.update = function(req, res) {
         );
 };
 
+exports.show = function(req, res, next) {
+	models.Grupo.findAll({
+		where : {
+			grupoId : Number(req.grupo.id),			
+		}
+	}).then(function(grupos) {
+		res.render('alumnos/show', {alumno: req.alumno, grupos: grupos});
+	}).catch(function(error) {
+		next(error);
+	});
+};

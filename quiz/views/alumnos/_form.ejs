@@ -18,6 +18,27 @@
 <label for="email" class="rem">E-mail:</label>
 <input type="text" id="email" name="alumno[email]" value="<%= alumno.email %>" />
 </p>
+<p>
+<label for="grupo" class="grupo">Grupo:</label>
+<table border=1 align="right">
+	<tr>
+		<th colspan=3><h3>Grupos:</h3></th>
+	</tr>
+	<tr>
+		<th><h3>Curso</h3></th>
+		<th><h3>Ensennanza</h3></th>
+		<th><h3>Grupo</h3></th>
+	<tr>
+	<% grupos.forEach(function(grupos){%>
+	<tr>
+		<td><%= grupo.curso %></td>
+		<td><%= grupo.ensenanza %></td>
+		<td><%= grupo.grupo %></td>
+	<tr>
+		<%});%>
+</table>
+</p>
+
 <a href="/admin/alumnos"><button type="button">Cancelar</button></a>
 
 <input type="submit" value="Guardar">
