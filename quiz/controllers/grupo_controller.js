@@ -98,3 +98,8 @@ exports.create = function(req, res) {
 		}
 	);
 };
+
+exports.alumnos = function(req, res) {
+	var grupo = req.grupo.id;
+    res.render('grupos/alumnos', {grupo: grupo});
+};

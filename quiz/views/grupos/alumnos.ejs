@@ -1,0 +1,9 @@
+<h3>Listado de Alumnos</h3>
+
+
+<table>
+<%for(index in grupo){%>
+	<%if(grupo.alumno[index]) {%>
+		<p>- <%=grupo.alumno[index].nombre%></p>
+		<%}}%>
+</table>

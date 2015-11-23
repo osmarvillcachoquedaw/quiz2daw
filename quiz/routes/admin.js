@@ -66,6 +66,7 @@ router.post('/cuestionarios/create', sessionController.loginRequired, cuestionar
 //Grupos
 router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
 router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
+router.get('/grupos/:grupoId(\\d+)/alumnos', 										grupoController.alumnos);
 router.get('/grupos/new', 						sessionController.adminRequired, 	grupoController.new);
 router.post('/grupos/create', 					sessionController.adminRequired, 	grupoController.create);
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);

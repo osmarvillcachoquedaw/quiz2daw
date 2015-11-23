@@ -28,8 +28,9 @@ Alumno.belongsTo(User, {foreignKey:'userId'});
 
 Grupo.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Grupo);
-Grupo.belongsTo(Alumno, {foreignKey: 'grupoId'});
-Alumno.hasMany(Grupo);
+
+Alumno.belongsTo(Grupo, {foreignKey: 'grupoId'});
+Grupo.hasMany(Alumno);
 
 Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Cuestionario);
