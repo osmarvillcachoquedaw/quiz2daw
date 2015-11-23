@@ -9,7 +9,7 @@
 <tr>
 	<%if(session.user){%>
 		<tr align=left>
-			<td><a href='/admin/grupos/<%= grupos[i].id %>'><%= grupos[i].id %> - <%= grupos[i].curso %>º <%= grupos[i].grupo %></a></td>
+			<td><a href='/admin/grupos/<%= grupos[i].id %>'><%= grupos[i].id %> - <%= grupos[i].curso %> <%= grupos[i].grupo %></a></td>
 			<td><a href="/admin/grupos/<%= grupos[i].id %>/edit"><button>Editar</button></a></td>
 			<td>
 				<form method="post" action="/admin/grupos/<%= grupos[i].id %>?_method=delete">

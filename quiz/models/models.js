@@ -19,23 +19,6 @@ var Profesor = sequelize.import(path.join(__dirname, 'profesor'));
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 var User = sequelize.import(path.join(__dirname, 'user'));
 
-
-Comment.belongsTo(Quiz);
-Quiz.hasMany(Comment);
-
-Profesor.belongsTo(User, {foreignKey:'userId'});
-Alumno.belongsTo(User, {foreignKey:'userId'});
-
-Grupo.belongsTo(Profesor, {foreignKey: 'creador'});
-Profesor.hasMany(Grupo);
-
-Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
-Profesor.hasMany(Cuestionario);
-
-CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
-Alumno.hasMany(CuestionarioAsignado);
-Cuestionario.hasMany(CuestionarioAsignado);
-
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
@@ -45,6 +28,9 @@ sequelize.sync().then(function() {
 					  password: '1234'
 		});
 		User.create({ username: 'pepe' ,
+					  password: '5678'
+		})
+		User.create({ username: 'antonio' ,
 					  password: '5678'
 		})
 		.then(function(){console.log('Tabla User inicializada')});
@@ -63,16 +49,27 @@ sequelize.sync().then(function() {
 		};
 	
 	});
+	
 	Alumno.count().then(function(count) {
-            if(count === 0) { // la tabla se inicializa solo si está vacía
+		if(count === 0) { // la tabla se inicializa solo si está vacía
 		Alumno.create({ dni: '52748123A',
 						apellido1: 'Pérez',
 						apellido2: 'López',
 						nombre: 'Juan',
 						email: 'Juan@gmail.com',
-						userId: 2
+						userId: 2,
+						grupo: 1
 		});
-            };
+		Alumno.create({ dni: '52748123B',
+						apellido1: 'Obiol',
+						apellido2: 'Sánchez',
+						nombre: 'Antonio',
+						email: 'Antonio@gmail.com',
+						userId: 3,
+						grupo: 2
+		})
+		.then(function(){console.log('Tabla Alumno inicializada')});
+		};
 	});
 
 	Profesor.count().then(function(count) {
@@ -99,7 +96,54 @@ sequelize.sync().then(function() {
 		.then(function(){console.log('Tabla Materia inicializada')});
 		};
 	});
+	Grupo.count().then(function(count) {
+		if(count === 0) { // la tabla se inicializa solo si esta vacia
+		Grupo.create({ 
+			tutor: 'alberto', 
+			anyo: '2015', 
+			grupo: 'FPGS', 
+			subgrupo: 'DAW', 
+			ensenanza: 'informatica', 
+			curso: '1º', 
+			horarioVisita: '12:00',
+			creador: 1,
+			ProfesorId: 1
+		});
+		Grupo.create({ 
+			tutor: 'jose', 
+			anyo: '2015', 
+			grupo: 'FPGS', 
+			subgrupo: 'DAW', 
+			ensenanza: 'informatica', 
+			curso: '2º', 
+			horarioVisita: '12:30',
+			creador: 1,
+			ProfesorId: 1
+		})
+		.then(function(){console.log('Tabla Grupo inicializada')});
+		};
+	});
+	
 });
+
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
+
+Profesor.belongsTo(User, {foreignKey:'userId'});
+Alumno.belongsTo(User, {foreignKey:'userId'});
+
+Alumno.belongsTo(Grupo, {foreignKey:'grupo'});
+
+Grupo.belongsTo(Profesor, {foreignKey: 'creador'});
+
+Profesor.hasMany(Grupo);
+
+Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
+Profesor.hasMany(Cuestionario);
+
+CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
+Alumno.hasMany(CuestionarioAsignado);
+Cuestionario.hasMany(CuestionarioAsignado);
 
 exports.Alumno = Alumno;
 exports.Comment = Comment;
