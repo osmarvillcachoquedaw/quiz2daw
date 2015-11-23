@@ -29,8 +29,13 @@ Alumno.belongsTo(User, {foreignKey:'userId'});
 Grupo.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Grupo);
 
+Grupo.belongsTo(Alumno, {foreignKey: 'creador'});
+Alumno.hasMany(Grupo);
+
 Cuestionario.belongsTo(Profesor, {foreignKey: 'creador'});
 Profesor.hasMany(Cuestionario);
+
+
 
 CuestionarioAsignado.belongsTo(Cuestionario, Alumno);	
 Alumno.hasMany(CuestionarioAsignado);
@@ -70,6 +75,7 @@ sequelize.sync().then(function() {
 						apellido2: 'López',
 						nombre: 'Juan',
 						email: 'Juan@gmail.com',
+						grupo: '1',
 						userId: 2
 		});
             };
