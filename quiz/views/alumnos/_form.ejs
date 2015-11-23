@@ -18,6 +18,22 @@
 <label for="email" class="rem">E-mail:</label>
 <input type="text" id="email" name="alumno[email]" value="<%= alumno.email %>" />
 </p>
+<p>
+<label for="grupo" class="rem">Grupo:</label>
+<select name="alumno[grupo]">
+	<option value="2ºE.S.O.">2ºE.S.O.</option>
+	<option value="3ºE.S.O.">3ºE.S.O.</option>
+	<option value="4ºE.S.O.">4ºE.S.O.</option>
+	<option value="1ºF.P.B.">1ºF.P.B.</option>
+	<option value="2ºF.P.B.">2ºF.P.B.</option>
+	<option value="1ºBACH">1ºBACH</option>
+	<option value="2ºBACH">2ºBACH</option>
+	<option value="1ºG.M.">1ºG.M.</option>
+	<option value="2ºG.M.">2ºG.M.</option>
+	<option value="1ºG.S.">1ºG.S.</option>
+	<option value="2ºG.S.">2ºG.S.</option>
+</select>
+</p>
 <a href="/admin/alumnos"><button type="button">Cancelar</button></a>
 
 <input type="submit" value="Guardar">

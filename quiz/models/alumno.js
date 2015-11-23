@@ -19,7 +19,11 @@ module.exports = function(sequelize, DataTypes) {
 		},
 		email: {
 			type: DataTypes.STRING
-		}
+		},
+                grupo: {
+                        type: DataTypes.STRING
+                        
+                }
 	});
 
 }
