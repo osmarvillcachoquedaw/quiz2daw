@@ -82,6 +82,7 @@ exports.update = function(req, res) {
     req.alumno.apellido1 = req.body.alumno.apellido1;
     req.alumno.apellido2 = req.body.alumno.apellido2;
     req.alumno.email = req.body.alumno.email;
+	req.alumno.grupo = req.body.alumno.grupo;
     
     req.alumno
             .validate()

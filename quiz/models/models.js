@@ -36,6 +36,11 @@ CuestionarioAsignado.belongsTo(Cuestionario, Alumno);
 Alumno.hasMany(CuestionarioAsignado);
 Cuestionario.hasMany(CuestionarioAsignado);
 
+Alumno.belongsTo(Profesor, {foreignKey: 'creador'});
+Grupo.hasMany(Alumno);
+
+
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
