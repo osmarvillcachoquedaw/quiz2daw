@@ -7,7 +7,8 @@
 <table>
 <% var i; for (i=0;i<alumnos.length;i++){ %>
 	<%if(session.user){%>
-		<td><%= alumnos[i].id %>-<%= alumnos[i].nombre %> <%= alumnos[i].apellido1 %> <%= alumnos[i].apellido2 %> - DNI: <%= alumnos[i].dni %></td>
+		<td><%= alumnos[i].id %>-<%= alumnos[i].nombre %> <%= alumnos[i].apellido1 %> <%= alumnos[i].apellido2 %> - DNI: <%= alumnos[i].dni %> 
+			- <%= alumnos[i].grupoAlumno %></td>
 		<td><a href="/admin/alumnos/<%= alumnos[i].id %>/edit"><button>editar</button></a></td>
 		<td>
 			<form method="post" action="/admin/alumnos/<%= alumnos[i].id %>?_method=delete">
@@ -16,6 +17,7 @@
 				</button>
 			</form>
 		</td>
+		<td>	</td>
                 
 	<%}%>
 </tr>

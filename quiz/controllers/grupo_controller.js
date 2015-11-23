@@ -28,6 +28,10 @@ exports.index = function(req, res) {
 	).catch(function(error){next(error);})
 };
 
+exports.indexAlumnos = function(req, res) {
+	res.render('grupos/showAlumnos', {grupo: req.grupo});
+}
+
 exports.show = function(req, res) {
     res.render('grupos/show', {grupo: req.grupo});
 };
