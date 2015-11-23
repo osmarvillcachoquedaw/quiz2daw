@@ -36,6 +36,9 @@ CuestionarioAsignado.belongsTo(Cuestionario, Alumno);
 Alumno.hasMany(CuestionarioAsignado);
 Cuestionario.hasMany(CuestionarioAsignado);
 
+/*Grupo.belongsTo(Alumno, {foreignKey:'grupo'});
+Alumno.belongsTo(Grupo, {foreignKey:'grupoId'});*/
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
@@ -70,7 +73,21 @@ sequelize.sync().then(function() {
 						apellido2: 'López',
 						nombre: 'Juan',
 						email: 'Juan@gmail.com',
-						userId: 2
+						userId: 2,
+                                                grupo: 1
+		});
+            };
+	});
+
+        Grupo.count().then(function(count) {
+            if(count === 0) { // la tabla se inicializa solo si está vacía
+		Grupo.create({ tutor: 'Alberto',
+						anyo: '2015',
+						grupo: 'A',
+						subgrupo: 'DAW',
+						ensenanza: "Una Ensenanza",
+                                                curso: 1,
+                                                horarioVisita: "10:00-10:30"
 		});
             };
 	});

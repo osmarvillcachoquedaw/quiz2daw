@@ -98,3 +98,9 @@ exports.create = function(req, res) {
 		}
 	);
 };
+
+//Listar alumnos de un grupo
+exports.listar = function(req, res) {
+        var alumno = req.alumno; //autoload de instancia de quiz
+        res.render('grupos/listar', {alumno: alumno});
+};

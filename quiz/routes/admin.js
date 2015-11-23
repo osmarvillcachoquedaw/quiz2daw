@@ -71,6 +71,7 @@ router.post('/grupos/create', 					sessionController.adminRequired, 	grupoContro
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
 router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
 router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
+router.get('/grupos/listar/:grupoId(\\d+)',       sessionController.adminRequired, 	grupoController.listar);
 
 //Materias
 router.get('/materias', materiaController.index);

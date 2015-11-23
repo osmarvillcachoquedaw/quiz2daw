@@ -3,7 +3,7 @@
 module.exports = function(sequelize, DataTypes) {
 	return sequelize.define('Grupo',
 	{
-		tutor: {
+		tutor: { 
 			type: DataTypes.STRING,
 		},
 		anyo: {
