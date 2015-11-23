@@ -70,7 +70,9 @@ sequelize.sync().then(function() {
 						apellido2: 'López',
 						nombre: 'Juan',
 						email: 'Juan@gmail.com',
-						userId: 2
+						userId: 2,
+						grupoId:1
+						
 		});
             };
 	});

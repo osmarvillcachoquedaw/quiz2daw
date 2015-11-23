@@ -65,12 +65,12 @@ router.post('/cuestionarios/create', sessionController.loginRequired, cuestionar
 
 //Grupos
 router.get('/grupos', 							sessionController.adminRequired,	grupoController.index);
-router.get('/grupos/:grupoId(\\d+)', 												grupoController.show);
 router.get('/grupos/new', 						sessionController.adminRequired, 	grupoController.new);
 router.post('/grupos/create', 					sessionController.adminRequired, 	grupoController.create);
 router.get('/grupos/:grupoId(\\d+)/edit',       sessionController.adminRequired, 	grupoController.edit);
 router.put('/grupos/:grupoId(\\d+)',            sessionController.adminRequired, 	grupoController.update);
 router.delete('/grupos/:grupoId(\\d+)', 		sessionController.adminRequired, 	grupoController.destroy);
+router.get('/grupos/:grupoId(\\d+)/alumnos',    								 	grupoController.show);
 
 //Materias
 router.get('/materias', materiaController.index);
