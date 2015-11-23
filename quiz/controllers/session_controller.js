@@ -12,7 +12,7 @@ exports.loginRequired = function(req,res, next){
 
 
 exports.adminRequired = function(req,res, next){
-	if(req.session.user && req.session.user.username == "admin"){
+	if(req.session.user && req.session.user.id == "1"){
 		next();
 		
 	}else{ 
@@ -21,14 +21,6 @@ exports.adminRequired = function(req,res, next){
 	}
 };
 
-exports.profesorRequired = function(req,res, next){
-	if(req.session.user && req.session.role == 0 || req.session.role == 1){
-		next();	
-	}else{ 
-		req.session.errors = [{"message": 'No esta autenticado como profesor'}];
-		res.redirect("/login");
-	}
-};
 
 // Get/login -- Formulario de login
 exports.new = function(req,res){
@@ -52,44 +44,38 @@ exports.create = function(req,res){
 			return;
 		}
 		req.session.user = {id:user.id, username:user.username};
-			var profesorController = require('./profesor_controller');
-			profesorController.roleProfesor(user.id,function(error,profesor){
-					if(error){
-							req.session.errors = [{"message": 'Se ha producido un error: '+error}];
-							res.redirect("/login");
-							return;
-					}
-					if(profesor) {
-						req.session.profesor = {id:profesor.id, nombre:profesor.nombre};
-						if ( profesor.id == 1 ) {
-							req.session.role  = 0;
-						}
-						else {
-							req.session.role = 1;
-						}
-					}
-					var alumnoController = require('./alumno_controller');
-					alumnoController.roleAlumno(user.id,function(error,alumno){
-							if(error){
-								req.session.errors = [{"message": 'Se ha producido un error: '+error}];
-								res.redirect("/login");
-								return;
-							}
-							if(alumno) {
-								req.session.alumno = {id:alumno.id, nombre:alumno.nombre};
-								req.session.role = 2;
-							}
-						res.redirect(req.session.redir.toString());
-					});
-						
-			});
-	});
+            var profesorController = require('./profesor_controller');
+            profesorController.roleProfesor(user.id,function(error,profesor){
+                    if(error){
+                            req.session.errors = [{"message": 'Se ha producido un error: '+error}];
+                            res.redirect("/login");
+                            return;
+                    }
+                    if(profesor) {
+                        req.session.profesor = {id:profesor.id, nombre:profesor.nombre};
+                        req.session.role = 1;
+                    }
+                    var alumnoController = require('./alumno_controller');
+                    alumnoController.roleAlumno(user.id,function(error,alumno){
+                            if(error){
+                                req.session.errors = [{"message": 'Se ha producido un error: '+error}];
+                                res.redirect("/login");
+                                return;
+                            }
+                            if(alumno) {
+                                req.session.alumno = {id:alumno.id, nombre:alumno.nombre};
+                                req.session.role = 2;
+                            }
+                        res.redirect(req.session.redir.toString());
+                    });
+                        
+            });
+        });
 };
 
 // DELETE /logout)
 
 exports.destroy = function(req,res){
 	delete req.session.user;
-	delete req.session.role;
-	res.redirect('/');
+	res.redirect(req.session.redir.toString());
 };
