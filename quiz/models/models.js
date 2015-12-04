@@ -36,16 +36,22 @@ CuestionarioAsignado.belongsTo(Cuestionario, Alumno);
 Alumno.hasMany(CuestionarioAsignado);
 Cuestionario.hasMany(CuestionarioAsignado);
 
+Quiz.belongsToMany(Cuestionario, { through: 'preguntaIncorporada' })// ***/
+Cuestionario.belongsToMany(Quiz, { through: 'preguntaIncorporada' })// ***/
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
 	User.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
-		User.create({ username: 'admin' ,
+		User.create({ username: 'admin' ,	//ADMIN
 					  password: '1234'
 		});
-		User.create({ username: 'pepe' ,
+		User.create({ username: 'pepe' ,	//PROFESOR
 					  password: '5678'
+		});
+		User.create({ username: 'juan' ,	//ALUMNO
+					  password: '4321'
 		})
 		.then(function(){console.log('Tabla User inicializada')});
 		};
@@ -53,7 +59,7 @@ sequelize.sync().then(function() {
 
 	Quiz.count().then(function(count) {
 		if(count === 0) { // la tabla se inicializa solo si está vacía
-		Quiz.create({ pregunta: 'Capital de Italia' ,
+		Quiz.create({ pregunta: 'Capital de Italia' ,	
 					  respuesta: 'Roma'
 		});
 		Quiz.create({ pregunta: 'Capital de Portugal' ,
@@ -70,7 +76,7 @@ sequelize.sync().then(function() {
 						apellido2: 'López',
 						nombre: 'Juan',
 						email: 'Juan@gmail.com',
-						userId: 2
+						userId: 3
 		});
             };
 	});
@@ -84,6 +90,14 @@ sequelize.sync().then(function() {
 			  movil: '699699699',
 			  departamento: 'Informatica',
 			  userId: 1,
+		});
+		Profesor.create({ apellidos: 'Sierra2 Olmo2' ,
+			  nombre: 'Alberto2',
+			  email: 'albertosierra@gmail.com',
+			  dni: '12345678E',
+			  movil: '699699699',
+			  departamento: 'Informatica',
+			  userId: 2,
 		})
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};

@@ -1,0 +1,8 @@
+<p>Este es el cuestionario nº<%= cuestionario.id %></p>
+      <p>Creador: <%= cuestionario.creador %> </p>
+      <p>Observaciones: <%= cuestionario.observaciones %> </p>
+      <p>Fecha fin: <%= cuestionario.fechaFin %> </p>
+
+<a href="/admin/cuestionarios/<%= cuestionario.id %>/quizes"><button>Mostrar preguntas</button></a>
+<a href="/admin/cuestionarios/<%= cuestionario.id %>/edit"><button>Editar cuestionario</button></a>
+<a href=""><button>Asignar cuestionario</button></a>

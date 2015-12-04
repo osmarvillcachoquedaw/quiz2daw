@@ -6,7 +6,7 @@
 			
 		</td>
 		
-		<%if(session.user) {%>
+		<%if(session.user && session.role == 1) {%>
 			<td>
 				<a href="/admin/materias/<%= materias[i].id %>/edit"><button>editar</button></a>
 			</td>
@@ -22,7 +22,7 @@
 <% } %>
 </table>
 <p>
-	<%if(session.user) {%>
+	<%if(session.user && session.role == 1) {%>
 		<a href="materias/new"><button type="button">Insertar Materia</button></a>
 	<%}%>
 </p>

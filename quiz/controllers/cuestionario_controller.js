@@ -82,3 +82,7 @@ exports.create = function(req, res) {
 		}
 	);
 };
+
+exports.showCuest = function(req, res){//	***/
+	res.render('cuestionarios/show', {cuestionario: req.cuestionario});
+}

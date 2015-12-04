@@ -53,7 +53,10 @@ exports.create = function(req,res){
                     }
                     if(profesor) {
                         req.session.profesor = {id:profesor.id, nombre:profesor.nombre};
-                        req.session.role = 1;
+                        req.session.role = 2;
+						if(req.session.user && req.session.user.id == "1"){
+							req.session.role = 1;
+						}
                     }
                     var alumnoController = require('./alumno_controller');
                     alumnoController.roleAlumno(user.id,function(error,alumno){
@@ -64,7 +67,7 @@ exports.create = function(req,res){
                             }
                             if(alumno) {
                                 req.session.alumno = {id:alumno.id, nombre:alumno.nombre};
-                                req.session.role = 2;
+                                req.session.role = 3;
                             }
                         res.redirect(req.session.redir.toString());
                     });
@@ -73,9 +76,9 @@ exports.create = function(req,res){
         });
 };
 
-// DELETE /logout)
+// DELETE /logout
 
 exports.destroy = function(req,res){
 	delete req.session.user;
-	res.redirect(req.session.redir.toString());
+	res.redirect("/");
 };
