@@ -32,6 +32,30 @@ exports.show = function(req, res) {
     res.render('grupos/show', {grupo: req.grupo});
 };
 
+
+
+exports.new = function(req, res) {
+	var grupo = models.Grupo.build( //crea objeto quiz
+	{tutor: "Tutor", anyo: "Año", grupo: 'Grupo', subgrupo: 'Subgrupo', ensenanza: 'Enseñanza', curso: 'Curso', horarioVisita: 'Horario visitas'});
+    res.render('grupos/new', {grupo: grupo, cuestionario: req.cuestionario});
+};
+
+exports.create = function(req, res){
+	var grupo = models.Grupo.build( req.body.quiz );
+	//guarda en DB los campos de grupo
+	grupo.validate()
+	.then(
+		function(err){
+			if(err) {
+			res.render('grupos/new', {grupo: grupo, errors: err.errors});
+			} else {
+				grupo.save({fields: ["tutor", "anyo", "grupo", "subgrupo", "ensenanza", "curso", "horarioVisita"]}).then(function(){
+					res.redirect('/admin/grupos');
+				})	//Redireccion HTTP (URL relativo) lista de preguntas
+			}
+		}
+	);
+}
 //Edita los grupos
 exports.edit = function(req, res) {
     var grupo = req.grupo; //autoload de instancia de grupo

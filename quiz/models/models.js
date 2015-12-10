@@ -23,6 +23,9 @@ var User = sequelize.import(path.join(__dirname, 'user'));
 Comment.belongsTo(Quiz);
 Quiz.hasMany(Comment);
 
+Cuestionario.belongsTo(Grupo);
+Grupo.hasMany(Cuestionario);
+
 Profesor.belongsTo(User, {foreignKey:'userId'});
 Alumno.belongsTo(User, {foreignKey:'userId'});
 

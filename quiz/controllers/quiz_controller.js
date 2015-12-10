@@ -47,7 +47,7 @@ exports.new = function(req, res) {
 	var quiz = models.Quiz.build( //crea objeto quiz
 	{pregunta: "Pregunta", respuesta: "Respuesta"}
 	);
-    res.render('quizes/new', {quiz: quiz});
+    res.render('quizes/new', {quiz: quiz, cuestionario: req.cuestionario});
 };
 
 // POST /quizes/create
@@ -72,7 +72,7 @@ exports.create = function(req, res) {
 // GET /quizes/:id/edit
 exports.edit = function(req, res) {
     var quiz = req.quiz; //autoload de instancia de quiz
-    res.render('quizes/edit', {quiz: quiz});
+    res.render('quizes/edit', {quiz: quiz, cuestionario: req.cuestionario});
 };
 
 exports.update = function(req, res) {
@@ -100,7 +100,7 @@ exports.destroy = function(req, res) {
     }).catch(function(error){next(error)});
 };
 
-exports.batch = function(req, res){/*asociar preguntas con cuestionario***/
+exports.batch = function(req, res){/*asociar preguntas con cuestionario(por lotes)***/
 	var preguntasPorAsociar = [];
 	
 	for(key in req.body.quizes) {console.log(key+' - '+req.body.quizes[key]);preguntasPorAsociar.push(key);}

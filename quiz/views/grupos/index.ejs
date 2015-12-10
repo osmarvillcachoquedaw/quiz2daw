@@ -1,4 +1,11 @@
 <table>
+<caption>
+	Grupos
+	<%if(session.user && (session.role == 1 || session.role == 2)) {%>
+			<a href="/admin/grupos/new"><button type="button">Crear grupo</button></a>
+	<%}%>
+</caption>
+	
 <% var i; for (i=0;i<grupos.length;i++){ %>
 <tr>
 	<%if(session.user){%>

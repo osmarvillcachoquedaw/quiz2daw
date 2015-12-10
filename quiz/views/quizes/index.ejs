@@ -30,7 +30,7 @@
 			</td>
 			<%if(session.user && (session.role == 1 || session.role == 2)) {%>
 				<td>
-					<a href="/admin/quizes/<%= quizes[i].id %>/edit"><input type="button"value="editar"></a>
+					<a href="/admin/cuestionarios/<%= cuestionario.id %>/quizes/<%= quizes[i].id %>/edit"><input type="button"value="editar"></a>
 				</td>
 				<td>
 					<!--<form method="post" action="/admin/quizes/<%= quizes[i].id %>?_method=delete">
@@ -49,6 +49,6 @@
 
 <p>
 	<%if(session.user && (session.role == 1 || session.role == 2)) {%>
-		<a href="/admin/quizes/new"><button type="button">Crear pregunta</button></a>
+		<a href="/admin/cuestionarios/<%= cuestionario.id %>/quizes/new"><button type="button">Crear pregunta</button></a>
 	<%}%>
 </p>
